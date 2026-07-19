@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard Administrateur — SportMap Bénin</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+    <!-- Styles personnalisés -->
+    <link rel="stylesheet" href="/css/style.css" />
+
+    <!-- Favicon -->
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/favicon.png" />
+<link rel="icon" type="image/png" sizes="192x192" href="/favicon.png" />
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #F9FAFB;
+        }
+
+        .btn-orange {
+            background-color: #FF6B00;
+            color: #FFFFFF;
+            transition: background-color 0.2s ease;
+        }
+
+        .btn-orange:hover {
+            background-color: #E05A00;
+        }
+
+        .btn-outline-orange {
+            border: 2px solid #FF6B00;
+            color: #FF6B00;
+            background: transparent;
+            transition: all 0.2s ease;
+        }
+
+        .btn-outline-orange:hover {
+            background: #FF6B00;
+            color: #FFFFFF;
+        }
+
+        .btn-danger {
+            background-color: #EF4444;
+            color: #FFFFFF;
+            transition: background-color 0.2s ease;
+        }
+
+        .btn-danger:hover {
+            background-color: #DC2626;
+        }
+
+        .stats-card {
+            background: #FFFFFF;
+            border-radius: 12px;
+            padding: 20px 24px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            border: 1px solid #E5E7EB;
+        }
+
+        .table-admin {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        .table-admin th {
+            background: #F9FAFB;
+            text-align: left;
+            padding: 12px 16px;
+            font-weight: 600;
+            color: #0A0A0A;
+            border-bottom: 2px solid #E5E7EB;
+        }
+
+        .table-admin td {
+            padding: 12px 16px;
+            border-bottom: 1px solid #E5E7EB;
+            vertical-align: middle;
+        }
+
+        .table-admin tr:hover {
+            background: #F9FAFB;
+        }
+
+        .badge-publie {
+            background: #10B981;
+            color: #FFFFFF;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .badge-brouillon {
+            background: #F59E0B;
+            color: #FFFFFF;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 999;
+        }
+
+        .modal-content {
+            background: #FFFFFF;
+            border-radius: 16px;
+            padding: 30px;
+            max-width: 500px;
+            width: 100%;
+            margin: 20px;
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal.active {
+            display: flex;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header class="bg-[#0A0A0A] py-4 px-6 shadow-lg">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <a href="/" class="text-white text-2xl font-extrabold tracking-tight">
+                SportMap Bénin
+            </a>
+            <div class="flex items-center gap-4">
+                <span class="text-white text-sm hidden sm:inline">
+                    <i class="fas fa-user text-[#FF6B00] mr-1"></i>
+                    <span id="adminName">Administrateur</span>
+                </span>
+                <button id="logoutBtn" class="text-white border border-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-white hover:text-[#0A0A0A] transition">
+                    <i class="fas fa-sign-out-alt mr-1"></i> Déconnexion
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN -->
+    <main class="max-w-7xl mx-auto px-4 py-8">
+
+        <!-- STATS -->
+        <div id="statsContainer" class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
+            <div class="stats-card">
+                <p class="text-sm text-gray-500">Total</p>
+                <p id="statTotal" class="text-2xl font-bold text-[#0A0A0A]">0</p>
+            </div>
+            <div class="stats-card">
+                <p class="text-sm text-gray-500">Publiés</p>
+                <p id="statPublie" class="text-2xl font-bold text-[#10B981]">0</p>
+            </div>
+            <div class="stats-card">
+                <p class="text-sm text-gray-500">Brouillons</p>
+                <p id="statBrouillon" class="text-2xl font-bold text-[#F59E0B]">0</p>
+            </div>
+            <div class="stats-card">
+                <p class="text-sm text-gray-500">Disciplines</p>
+                <p id="statDisciplines" class="text-2xl font-bold text-[#FF6B00]">0</p>
+            </div>
+        </div>
+
+        <!-- ACTIONS -->
+        <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
+            <button id="openCreateModalBtn" class="btn-orange px-6 py-3 rounded-lg font-semibold flex items-center gap-2">
+                <i class="fas fa-plus-circle"></i> Ajouter un centre
+            </button>
+            <div class="flex gap-2">
+                <button id="manageDisciplinesBtn" class="btn-outline-orange px-4 py-2 rounded-lg font-medium text-sm">
+                    <i class="fas fa-tags mr-1"></i> Disciplines
+                </button>
+            </div>
+        </div>
+
+        <!-- TABLEAU DES CENTRES -->
+        <div class="bg-white rounded-xl shadow overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="table-admin">
+                    <thead>
+                        <tr>
+                            <th>Nom</th>
+                            <th>Quartier</th>
+                            <th>Commune</th>
+                            <th>Statut</th>
+                            <th class="text-right">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="centresTableBody">
+                        <tr>
+                            <td colspan="5" class="text-center py-8 text-gray-500">
+                                <i class="fas fa-spinner fa-spin mr-2"></i> Chargement...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- Pagination -->
+            <div id="adminPagination" class="flex justify-center items-center gap-3 py-4 border-t border-gray-200">
+            </div>
+        </div>
+    </main>
+
+    <!-- MODALE AJOUT/MODIFICATION -->
+    <div id="centreModal" class="modal">
+        <div class="modal-content max-w-2xl max-h-[90vh] overflow-y-auto">
+            <h2 id="modalTitle" class="text-2xl font-bold text-[#0A0A0A] mb-4">
+                <i class="fas fa-plus-circle text-[#FF6B00] mr-2"></i> Ajouter un centre
+            </h2>
+
+            <form id="centreForm">
+                <input type="hidden" id="editCentreId" />
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Colonne gauche -->
+                    <div>
+
+                        <div class="mb-3">
+    <label class="form-label">Logo du centre</label>
+    <input type="file" id="formLogo" class="form-input" accept="image/*" />
+</div>
+
+<div class="mb-3">
+    <label class="form-label">Photos du centre</label>
+    <input type="file" id="formPhotos" class="form-input" accept="image/*" multiple />
+</div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Nom du centre *</label>
+                            <input type="text" id="formNom" class="form-input" required />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Description</label>
+                            <textarea id="formDescription" class="form-input" rows="2"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Adresse</label>
+                            <input type="text" id="formAdresse" class="form-input" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Téléphone</label>
+                            <input type="text" id="formTelephone" class="form-input" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">WhatsApp</label>
+                            <input type="text" id="formWhatsapp" class="form-input" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input type="email" id="formEmail" class="form-input" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Horaires</label>
+                            <input type="text" id="formHoraires" class="form-input" placeholder="Lun-Sam 08:00-18:00" />
+                        </div>
+                    </div>
+
+                    <!-- Colonne droite -->
+                    <div>
+                        <div class="mb-3">
+                            <label class="form-label">Commune *</label>
+                            <select id="formCommune" class="form-input" required>
+                                <option value="">Sélectionner une commune</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Quartier</label>
+                            <input type="text" id="formQuartier" class="form-input" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Latitude</label>
+                            <input type="number" id="formLatitude" class="form-input" step="0.0000001" placeholder="6.3600000" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Longitude</label>
+                            <input type="number" id="formLongitude" class="form-input" step="0.0000001" placeholder="2.3900000" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Disciplines</label>
+                            <div id="formDisciplines" class="space-y-1 max-h-32 overflow-y-auto border border-gray-200 rounded-lg p-2">
+                                <!-- Checkbox générées par JS -->
+                            </div>
+                             <button type="button" id="addDisciplineInlineBtn" class="mt-2 text-[#FF6B00] text-sm font-medium hover:underline flex items-center gap-1">
+        <i class="fas fa-plus-circle"></i> Nouvelle discipline
+    </button>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Statut</label>
+                            <div class="flex gap-4 mt-1">
+                                <label class="flex items-center gap-2 text-sm">
+                                    <input type="radio" name="statut" value="brouillon" checked class="form-checkbox" />
+                                    Brouillon
+                                </label>
+                                <label class="flex items-center gap-2 text-sm">
+                                    <input type="radio" name="statut" value="publie" class="form-checkbox" />
+                                    Publié
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex gap-3 mt-6 pt-4 border-t border-gray-200">
+                    <button type="submit" class="btn-orange px-6 py-2.5 rounded-lg font-semibold flex-1 flex items-center justify-center gap-2">
+                        <i class="fas fa-save"></i> Enregistrer
+                    </button>
+                    <button type="button" id="closeModalBtn" class="px-6 py-2.5 border border-gray-300 rounded-lg font-medium hover:bg-gray-50 transition">
+                        Annuler
+                    </button>
+                </div>
+            </form>
+        </div>
+        
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="bg-[#0A0A0A] text-white py-4 px-4 mt-8">
+        <div class="max-w-7xl mx-auto text-center text-sm">
+            &copy; 2026 SportMap Bénin — Administrateur
+        </div>
+    </footer>
+
+    <!-- SCRIPTS -->
+    <script type="module">
+        import {
+            getAdminCentres,
+            createCentre,
+            updateCentre,
+            deleteCentre,
+            publierCentre,
+            depublierCentre,
+            getAdminDisciplines,
+            createDiscipline,
+            deleteDiscipline
+        } from '/js/api.js';
+
+        // ============================================
+        // ÉTAT GLOBAL
+        // ============================================
+
+        const token = localStorage.getItem('adminToken');
+        if (!token) {
+            window.location.href = '/admin/login.html';
+        }
+
+        let currentPage = 1;
+        let perPage = 10;
+        let centresData = [];
+        let disciplinesData = [];
+        const communesBenin = [
+            'Abomey', 'Abomey-Calavi', 'Adjarra', 'Adja-Ouèrè', 'Aglangandan',
+            'Aguégués', 'Akpro-Missérété', 'Allada', 'Alibori', 'Aplahoué',
+            'Athémè', 'Avrankou', 'Bantè', 'Bassila', 'Bembèrèkè',
+            'Bohicon', 'Bonou', 'Boukoumbé', 'Calavi', 'Cobly',
+            'Comé', 'Copargo', 'Cotonou', 'Dangbo', 'Dassa-Zoumè',
+            'Djakotomey', 'Djougou', 'Dogbo', 'Gouka', 'Grand-Popo',
+            'Ifangni', 'Kandi', 'Karimama', 'Kérou', 'Kétou',
+            'Kouandé', 'Kpomassè', 'Lalo', 'Lokossa', 'Malanville',
+            'Matéri', 'Mègne', 'Mono', 'Natitingou', 'Ndali',
+            'Nikki', 'Ouidah', 'Ouèssè', 'Pahou', 'Parakou',
+            'Péhunco', 'Pobè', 'Porto-Novo', 'Sakété', 'Savalou',
+            'Savè', 'Ségbana', 'Sèmè-Kpodji', 'Sinendé', 'Sô-Ava',
+            'Tanguiéta', 'Tchaourou', 'Toffo', 'Tori-Bossito', 'Toucountouna',
+            'Toviklin', 'Zagnanado', 'Zè', 'Zogbodomey', 'Zou'
+        ];
+
+        // ============================================
+        // RÉFÉRENCES DOM
+        // ============================================
+
+        const tbody = document.getElementById('centresTableBody');
+        const paginationContainer = document.getElementById('adminPagination');
+        const statsTotal = document.getElementById('statTotal');
+        const statsPublie = document.getElementById('statPublie');
+        const statsBrouillon = document.getElementById('statBrouillon');
+        const statsDisciplines = document.getElementById('statDisciplines');
+
+        const modal = document.getElementById('centreModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const form = document.getElementById('centreForm');
+        const editIdInput = document.getElementById('editCentreId');
+        const formNom = document.getElementById('formNom');
+        const formDescription = document.getElementById('formDescription');
+        const formAdresse = document.getElementById('formAdresse');
+        const formTelephone = document.getElementById('formTelephone');
+        const formWhatsapp = document.getElementById('formWhatsapp');
+        const formEmail = document.getElementById('formEmail');
+        const formHoraires = document.getElementById('formHoraires');
+        const formCommune = document.getElementById('formCommune');
+        const formQuartier = document.getElementById('formQuartier');
+        const formLatitude = document.getElementById('formLatitude');
+        const formLongitude = document.getElementById('formLongitude');
+        const formDisciplines = document.getElementById('formDisciplines');
+        const formStatut = document.querySelectorAll('input[name="statut"]');
+
+        // ============================================
+        // CHARGEMENT INITIAL
+        // ============================================
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                await loadDisciplines();
+                await loadCentres();
+            } catch (error) {
+                console.error('Erreur initiale:', error);
+            }
+        });
+
+        // ============================================
+        // CHARGEMENT DES DISCIPLINES
+        // ============================================
+
+        async function loadDisciplines() {
+            try {
+                const response = await getAdminDisciplines(token, { per_page: 100 });
+                disciplinesData = response.data || [];
+                statsDisciplines.textContent = disciplinesData.length;
+
+                // Remplir les checkbox du formulaire
+                renderDisciplineCheckboxes();
+
+            } catch (error) {
+                console.error('Erreur chargement disciplines:', error);
+            }
+        }
+
+        // ============================================
+// AJOUT RAPIDE D'UNE DISCIPLINE
+// ============================================
+
+document.getElementById('addDisciplineInlineBtn').addEventListener('click', async () => {
+    const nom = prompt('Entrez le nom de la nouvelle discipline :');
+    if (!nom || !nom.trim()) return;
+
+    try {
+        await createDiscipline(token, { nom: nom.trim() });
+        alert('Discipline créée avec succès.');
+        await loadDisciplines(); // Recharge la liste
+    } catch (error) {
+        alert(error.message || 'Erreur lors de la création.');
+    }
+});
+
+        function renderDisciplineCheckboxes(selectedIds = []) {
+            if (!disciplinesData || disciplinesData.length === 0) {
+                formDisciplines.innerHTML = '<p class="text-gray-400 text-sm">Aucune discipline disponible</p>';
+                return;
+            }
+
+            formDisciplines.innerHTML = disciplinesData.map(d => `
+                <label class="flex items-center gap-2 text-sm cursor-pointer hover:bg-gray-50 p-1 rounded">
+                    <input type="checkbox" value="${d.id_discipline}" 
+                           class="form-checkbox" 
+                           ${selectedIds.includes(d.id_discipline) ? 'checked' : ''} />
+                    ${d.nom}
+                </label>
+            `).join('');
+        }
+
+        // ============================================
+        // CHARGEMENT DES COMMUNES
+        // ============================================
+
+        function loadCommunes(selectedCommune = '') {
+            formCommune.innerHTML = '<option value="">Sélectionner une commune</option>';
+            communesBenin.forEach(commune => {
+                const option = document.createElement('option');
+                option.value = commune;
+                option.textContent = commune;
+                if (commune === selectedCommune) {
+                    option.selected = true;
+                }
+                formCommune.appendChild(option);
+            });
+        }
+
+        // ============================================
+        // CHARGEMENT DES CENTRES
+        // ============================================
+
+        async function loadCentres() {
+            try {
+                const response = await getAdminCentres(token, {
+                    per_page: perPage,
+                    page: currentPage
+                });
+
+                centresData = response.data || [];
+                renderTable(centresData);
+                renderPagination(response);
+                updateStats(centresData);
+
+            } catch (error) {
+                console.error('Erreur chargement centres:', error);
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="5" class="text-center py-8 text-red-600">
+                            <i class="fas fa-exclamation-circle mr-2"></i>
+                            Erreur lors du chargement des centres.
+                        </td>
+                    </tr>
+                `;
+            }
+        }
+
+        function renderTable(centres) {
+            if (!centres || centres.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="5" class="text-center py-8 text-gray-500">
+                            <i class="fas fa-inbox mr-2"></i>
+                            Aucun centre trouvé.
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tbody.innerHTML = centres.map(centre => `
+                <tr>
+                    <td class="font-medium text-[#0A0A0A]">${centre.nom}</td>
+                    <td class="text-gray-600">${centre.quartier || '-'}</td>
+                    <td class="text-gray-600">${centre.commune || '-'}</td>
+                    <td>
+                        <span class="${centre.statut === 'publie' ? 'badge-publie' : 'badge-brouillon'}">
+                            ${centre.statut === 'publie' ? 'Publié' : 'Brouillon'}
+                        </span>
+                    </td>
+                    <td class="text-right">
+                        <div class="flex items-center justify-end gap-2 flex-wrap">
+                            <button class="btn-edit text-[#FF6B00] hover:text-[#E05A00] transition text-sm"
+                                    data-id="${centre.id_centre}"
+                                    title="Modifier">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            ${centre.statut === 'publie' ? `
+                                <button class="btn-depublier text-gray-500 hover:text-[#F59E0B] transition text-sm"
+                                        data-id="${centre.id_centre}"
+                                        title="Dépublier">
+                                    <i class="fas fa-eye-slash"></i>
+                                </button>
+                            ` : `
+                                <button class="btn-publier text-gray-500 hover:text-[#10B981] transition text-sm"
+                                        data-id="${centre.id_centre}"
+                                        title="Publier">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            `}
+                            <button class="btn-delete text-gray-500 hover:text-red-600 transition text-sm"
+                                    data-id="${centre.id_centre}"
+                                    title="Supprimer">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+
+            // Écouter les événements des boutons
+            document.querySelectorAll('.btn-edit').forEach(btn => {
+                btn.addEventListener('click', () => openEditModal(parseInt(btn.dataset.id)));
+            });
+
+            document.querySelectorAll('.btn-publier').forEach(btn => {
+                btn.addEventListener('click', () => handlePublier(parseInt(btn.dataset.id)));
+            });
+
+            document.querySelectorAll('.btn-depublier').forEach(btn => {
+                btn.addEventListener('click', () => handleDepublier(parseInt(btn.dataset.id)));
+            });
+
+            document.querySelectorAll('.btn-delete').forEach(btn => {
+                btn.addEventListener('click', () => handleDelete(parseInt(btn.dataset.id)));
+            });
+        }
+
+        // ============================================
+        // PAGINATION
+        // ============================================
+
+        function renderPagination(response) {
+            if (!response || !response.last_page || response.last_page <= 1) {
+                paginationContainer.innerHTML = '';
+                return;
+            }
+
+            let html = '';
+
+            if (response.prev_page_url) {
+                html += `<button class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition" data-page="${response.current_page - 1}">
+                            <i class="fas fa-chevron-left"></i>
+                         </button>`;
+            } else {
+                html += `<button class="px-4 py-2 border border-gray-300 rounded-lg text-gray-400 cursor-not-allowed" disabled>
+                            <i class="fas fa-chevron-left"></i>
+                         </button>`;
+            }
+
+            for (let i = 1; i <= response.last_page; i++) {
+                if (i === response.current_page) {
+                    html += `<button class="px-4 py-2 bg-[#FF6B00] text-white rounded-lg font-medium" data-page="${i}">${i}</button>`;
+                } else if (i === 1 || i === response.last_page || Math.abs(i - response.current_page) <= 2) {
+                    html += `<button class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition" data-page="${i}">${i}</button>`;
+                } else if (i === response.current_page - 3 || i === response.current_page + 3) {
+                    html += `<span class="px-2 text-gray-400">...</span>`;
+                }
+            }
+
+            if (response.next_page_url) {
+                html += `<button class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition" data-page="${response.current_page + 1}">
+                            <i class="fas fa-chevron-right"></i>
+                         </button>`;
+            } else {
+                html += `<button class="px-4 py-2 border border-gray-300 rounded-lg text-gray-400 cursor-not-allowed" disabled>
+                            <i class="fas fa-chevron-right"></i>
+                         </button>`;
+            }
+
+            paginationContainer.innerHTML = html;
+
+            document.querySelectorAll('[data-page]').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const page = parseInt(btn.dataset.page);
+                    if (page && page !== currentPage) {
+                        currentPage = page;
+                        loadCentres();
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }
+                });
+            });
+        }
+
+        // ============================================
+        // STATISTIQUES
+        // ============================================
+
+        function updateStats(centres) {
+            const total = centres.length;
+            const publie = centres.filter(c => c.statut === 'publie').length;
+            const brouillon = centres.filter(c => c.statut === 'brouillon').length;
+
+            statsTotal.textContent = total;
+            statsPublie.textContent = publie;
+            statsBrouillon.textContent = brouillon;
+        }
+
+        // ============================================
+        // GESTION DU FORMULAIRE (MODALE)
+        // ============================================
+
+        document.getElementById('openCreateModalBtn').addEventListener('click', () => {
+            openCreateModal();
+        });
+
+        document.getElementById('closeModalBtn').addEventListener('click', () => {
+            closeModal();
+        });
+
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal();
+        });
+
+        function openCreateModal() {
+            modalTitle.innerHTML = '<i class="fas fa-plus-circle text-[#FF6B00] mr-2"></i> Ajouter un centre';
+            form.reset();
+            editIdInput.value = '';
+            formCommune.value = '';
+            loadCommunes();
+            renderDisciplineCheckboxes([]);
+            document.querySelector('input[name="statut"][value="brouillon"]').checked = true;
+            modal.classList.add('active');
+        }
+
+        function openEditModal(id) {
+            const centre = centresData.find(c => c.id_centre === id);
+            if (!centre) return;
+
+            modalTitle.innerHTML = '<i class="fas fa-edit text-[#FF6B00] mr-2"></i> Modifier le centre';
+            editIdInput.value = centre.id_centre;
+            formNom.value = centre.nom || '';
+            formDescription.value = centre.description || '';
+            formAdresse.value = centre.adresse || '';
+            formTelephone.value = centre.telephone || '';
+            formWhatsapp.value = centre.whatsapp || '';
+            formEmail.value = centre.email || '';
+            formHoraires.value = centre.horaires || '';
+            loadCommunes(centre.commune || '');
+            formQuartier.value = centre.quartier || '';
+            formLatitude.value = centre.latitude || '';
+            formLongitude.value = centre.longitude || '';
+
+            const disciplineIds = centre.disciplines ? centre.disciplines.map(d => d.id_discipline) : [];
+            renderDisciplineCheckboxes(disciplineIds);
+
+            document.querySelector(`input[name="statut"][value="${centre.statut}"]`).checked = true;
+
+            modal.classList.add('active');
+        }
+
+        function closeModal() {
+            modal.classList.remove('active');
+        }
+
+        // ============================================
+        // SOUMISSION DU FORMULAIRE
+        // ============================================
+
+       form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const isEdit = editIdInput.value !== '';
+
+    const formData = new FormData();
+
+    // Ajouter les champs texte
+    formData.append('nom', formNom.value.trim());
+    formData.append('description', formDescription.value.trim() || '');
+    formData.append('adresse', formAdresse.value.trim() || '');
+    formData.append('telephone', formTelephone.value.trim() || '');
+    formData.append('whatsapp', formWhatsapp.value.trim() || '');
+    formData.append('email', formEmail.value.trim() || '');
+    formData.append('horaires', formHoraires.value.trim() || '');
+    formData.append('commune', formCommune.value || '');
+    formData.append('quartier', formQuartier.value.trim() || '');
+    formData.append('latitude', formLatitude.value || '');
+    formData.append('longitude', formLongitude.value || '');
+    formData.append('statut', document.querySelector('input[name="statut"]:checked').value);
+
+    // Ajouter les disciplines (tableau)
+    const disciplines = Array.from(formDisciplines.querySelectorAll('input[type="checkbox"]:checked'))
+        .map(cb => parseInt(cb.value));
+    disciplines.forEach(id => formData.append('disciplines[]', id));
+
+    // Ajouter le logo (fichier)
+    const logoInput = document.getElementById('formLogo');
+    if (logoInput && logoInput.files.length > 0) {
+        formData.append('logo', logoInput.files[0]);
+    }
+
+    // Ajouter les photos (fichiers)
+    const photosInput = document.getElementById('formPhotos');
+    if (photosInput && photosInput.files.length > 0) {
+        for (let i = 0; i < photosInput.files.length; i++) {
+            formData.append('photos[]', photosInput.files[i]);
+        }
+    }
+
+    // Si c'est une modification, ajouter la méthode PUT
+    if (isEdit) {
+        formData.append('_method', 'PUT');
+    }
+
+    try {
+        const url = isEdit
+            ? `/api/admin/centres/${editIdInput.value}`
+            : '/api/admin/centres';
+
+        const response = await fetch(url, {
+            method: 'POST', // Laravel gère PUT via _method
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                // Ne pas mettre Content-Type ! Le navigateur le gère avec FormData
+            },
+            body: formData,
+        });
+
+        if (!response.ok) {
+            const error = await response.json();
+            throw new Error(error.message || 'Erreur lors de l\'enregistrement');
+        }
+
+        const result = await response.json();
+        alert(result.message || 'Centre enregistré avec succès.');
+        closeModal();
+        await loadCentres();
+
+    } catch (error) {
+        console.error(error);
+        alert(error.message || 'Une erreur est survenue.');
+    }
+});
+
+        // ============================================
+        // ACTIONS ADMIN
+        // ============================================
+
+        async function handlePublier(id) {
+            if (!confirm('Publier ce centre ?')) return;
+            try {
+                await publierCentre(token, id);
+                await loadCentres();
+            } catch (error) {
+                alert(error.message || 'Erreur lors de la publication.');
+            }
+        }
+
+        async function handleDepublier(id) {
+            if (!confirm('Dépublier ce centre ?')) return;
+            try {
+                await depublierCentre(token, id);
+                await loadCentres();
+            } catch (error) {
+                alert(error.message || 'Erreur lors de la dépublication.');
+            }
+        }
+
+        async function handleDelete(id) {
+            if (!confirm('Supprimer définitivement ce centre ?')) return;
+            try {
+                await deleteCentre(token, id);
+                await loadCentres();
+            } catch (error) {
+                alert(error.message || 'Erreur lors de la suppression.');
+            }
+        }
+
+        // ============================================
+        // DÉCONNEXION
+        // ============================================
+
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+            localStorage.removeItem('adminToken');
+            localStorage.removeItem('adminUser');
+            window.location.href = '/admin/login.html';
+        });
+
+        // ============================================
+        // GESTION DES DISCIPLINES
+        // ============================================
+
+        document.getElementById('manageDisciplinesBtn').addEventListener('click', () => {
+            const disciplineList = disciplinesData.map(d => `- ${d.nom}`).join('\n');
+            const newDiscipline = prompt(`Gestion des disciplines\n\nDisciplines actuelles :\n${disciplineList}\n\nEntrez le nom d'une nouvelle discipline (ou annuler pour quitter) :`);
+
+            if (newDiscipline && newDiscipline.trim()) {
+                createDiscipline(token, { nom: newDiscipline.trim() })
+                    .then(() => {
+                        alert('Discipline créée avec succès.');
+                        loadDisciplines();
+                    })
+                    .catch(err => {
+                        alert(err.message || 'Erreur lors de la création.');
+                    });
+            }
+        });
+    </script>
+</body>
+</html>

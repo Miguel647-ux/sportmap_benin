@@ -2,17 +2,14 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use Illuminate\Notifications\Notifiable; 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Administrateur extends Model
+class Administrateur extends Authenticatable
 {
-    use HasFactory;
-    use HasApiTokens;
-    use Notifiable;
+    use HasApiTokens, HasFactory, Notifiable;
 
     protected $table = 'administrateurs';
     protected $primaryKey = 'id_administrateur';
@@ -26,9 +23,18 @@ class Administrateur extends Model
 
     protected $hidden = [
         'mot_de_passe',
+        'remember_token',
     ];
 
-    // Relations
+    protected $casts = [
+        'date_inscription' => 'datetime',
+    ];
+
+    public function getAuthPassword()
+    {
+        return $this->mot_de_passe;
+    }
+
     public function centres()
     {
         return $this->hasMany(Centre::class, 'id_administrateur');

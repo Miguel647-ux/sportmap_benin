@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Détails du centre — SportMap Bénin</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+    <!-- Styles personnalisés -->
+    <link rel="stylesheet" href="/css/style.css" />
+
+    <!-- Favicon -->
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/favicon.png" />
+<link rel="icon" type="image/png" sizes="192x192" href="/favicon.png" />
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #F9FAFB;
+        }
+
+        .card-detail {
+            background: #FFFFFF;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            padding: 24px;
+        }
+
+        .badge-discipline {
+            background: #FF6B00;
+            color: #FFFFFF;
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+            display: inline-block;
+        }
+
+        .btn-orange {
+            background-color: #FF6B00;
+            color: #FFFFFF;
+            transition: background-color 0.2s ease;
+        }
+
+        .btn-orange:hover {
+            background-color: #E05A00;
+        }
+
+        .btn-outline-orange {
+            border: 2px solid #FF6B00;
+            color: #FF6B00;
+            background: transparent;
+            transition: all 0.2s ease;
+        }
+
+        .btn-outline-orange:hover {
+            background: #FF6B00;
+            color: #FFFFFF;
+        }
+
+        #map-detail {
+            height: 250px;
+            width: 100%;
+            border-radius: 12px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header class="bg-[#0A0A0A] py-4 px-6 shadow-lg">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <a href="/" class="text-white text-2xl font-extrabold tracking-tight">
+                SportMap Bénin
+            </a>
+            <a href="/" class="text-white border border-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-white hover:text-[#0A0A0A] transition">
+                <i class="fas fa-arrow-left mr-2"></i> Retour à l'accueil
+            </a>
+        </div>
+    </header>
+
+    <!-- CONTENU PRINCIPAL -->
+    <main class="max-w-4xl mx-auto px-4 py-8">
+
+        <!-- Chargement -->
+        <div id="loading" class="text-center py-12">
+            <i class="fas fa-spinner fa-spin text-3xl text-[#FF6B00]"></i>
+            <p class="text-gray-500 mt-3">Chargement du centre...</p>
+        </div>
+
+        <!-- Erreur -->
+        <div id="error" class="hidden text-center py-12">
+            <i class="fas fa-exclamation-circle text-4xl text-red-500"></i>
+            <p id="errorMessage" class="text-red-600 mt-3">Centre non trouvé.</p>
+            <a href="/" class="btn-orange inline-block mt-4 px-6 py-2 rounded-lg">
+                Retour à l'accueil
+            </a>
+        </div>
+
+        <!-- Détails du centre -->
+        <div id="centreDetail" class="hidden">
+
+            <!-- En-tête -->
+            <div class="card-detail mb-6">
+                <div class="flex items-center gap-5">
+                    <div id="logoContainer" class="w-20 h-20 rounded-full bg-gray-200 flex items-center justify-center flex-shrink-0 overflow-hidden">
+                        <i class="fas fa-building text-gray-400 text-2xl"></i>
+                    </div>
+                    <div>
+                        <h1 id="centreNom" class="text-2xl font-extrabold text-[#0A0A0A]">Nom du centre</h1>
+                        <p id="centreLocalisation" class="text-gray-500 text-sm">
+                            <i class="fas fa-map-marker-alt text-[#FF6B00] mr-1"></i>
+                            Quartier, Commune
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Grille 2 colonnes -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                <!-- Colonne gauche -->
+                <div class="card-detail">
+                    <h2 class="font-bold text-[#0A0A0A] text-lg mb-3">
+                        <i class="fas fa-info-circle text-[#FF6B00] mr-2"></i> Informations
+                    </h2>
+                    <div class="space-y-2 text-sm">
+                        <p><span class="text-gray-500">Adresse :</span> <span id="centreAdresse">-</span></p>
+                        <p><span class="text-gray-500">Commune :</span> <span id="centreCommune">-</span></p>
+                        <p><span class="text-gray-500">Quartier :</span> <span id="centreQuartier">-</span></p>
+                        <p><span class="text-gray-500">Horaires :</span> <span id="centreHoraires">-</span></p>
+                        <p><span class="text-gray-500">Vues :</span> <span id="centreVues">0</span></p>
+                    </div>
+
+                    <hr class="my-4 border-gray-200" />
+
+                    <h2 class="font-bold text-[#0A0A0A] text-lg mb-3">
+                        <i class="fas fa-phone text-[#FF6B00] mr-2"></i> Contact
+                    </h2>
+                    <div class="space-y-2 text-sm">
+                        <p><span class="text-gray-500">Téléphone :</span> <span id="centreTelephone">-</span></p>
+                        <p><span class="text-gray-500">WhatsApp :</span> <span id="centreWhatsapp">-</span></p>
+                        <p><span class="text-gray-500">Email :</span> <span id="centreEmail">-</span></p>
+                    </div>
+
+                    <div class="flex flex-wrap gap-3 mt-4">
+                        <a id="callBtn" href="#" class="btn-orange px-5 py-2 rounded-lg font-medium text-sm flex items-center gap-2">
+                            <i class="fas fa-phone"></i> Appeler
+                        </a>
+                        <a id="whatsappBtn" href="#" target="_blank" class="btn-outline-orange px-5 py-2 rounded-lg font-medium text-sm flex items-center gap-2">
+                            <i class="fab fa-whatsapp"></i> WhatsApp
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Colonne droite -->
+                <div class="card-detail">
+                    <h2 class="font-bold text-[#0A0A0A] text-lg mb-3">
+                        <i class="fas fa-tags text-[#FF6B00] mr-2"></i> Disciplines
+                    </h2>
+                    <div id="disciplinesContainer" class="flex flex-wrap gap-2">
+                        <span class="text-gray-400 text-sm">Aucune discipline</span>
+                    </div>
+
+                    <hr class="my-4 border-gray-200" />
+
+                    <h2 class="font-bold text-[#0A0A0A] text-lg mb-3">
+                        <i class="fas fa-map-pin text-[#FF6B00] mr-2"></i> Localisation
+                    </h2>
+                    <div id="map-detail"></div>
+                </div>
+            </div>
+
+            <!-- Photos -->
+            <div id="photosContainer" class="card-detail mt-6 hidden">
+                <h2 class="font-bold text-[#0A0A0A] text-lg mb-3">
+                    <i class="fas fa-images text-[#FF6B00] mr-2"></i> Galerie photos
+                </h2>
+                <div id="photosGrid" class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                    <!-- Photos injectées par JS -->
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-[#0A0A0A] text-white py-4 px-4 mt-8">
+        <div class="max-w-7xl mx-auto text-center text-sm">
+            &copy; 2026 SportMap Bénin
+        </div>
+    </footer>
+
+    <!-- SCRIPTS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script type="module">
+        import { getCentreById } from '/js/api.js';
+
+        const loading = document.getElementById('loading');
+        const errorDiv = document.getElementById('error');
+        const errorMessage = document.getElementById('errorMessage');
+        const centreDetail = document.getElementById('centreDetail');
+
+        // Éléments du centre
+        const centreNom = document.getElementById('centreNom');
+        const centreLocalisation = document.getElementById('centreLocalisation');
+        const centreAdresse = document.getElementById('centreAdresse');
+        const centreCommune = document.getElementById('centreCommune');
+        const centreQuartier = document.getElementById('centreQuartier');
+        const centreHoraires = document.getElementById('centreHoraires');
+        const centreVues = document.getElementById('centreVues');
+        const centreTelephone = document.getElementById('centreTelephone');
+        const centreWhatsapp = document.getElementById('centreWhatsapp');
+        const centreEmail = document.getElementById('centreEmail');
+        const callBtn = document.getElementById('callBtn');
+        const whatsappBtn = document.getElementById('whatsappBtn');
+        const disciplinesContainer = document.getElementById('disciplinesContainer');
+        const photosContainer = document.getElementById('photosContainer');
+        const photosGrid = document.getElementById('photosGrid');
+        const logoContainer = document.getElementById('logoContainer');
+
+        // ============================================
+        // FONCTION PRINCIPALE
+        // ============================================
+
+        async function init() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const centreId = urlParams.get('id');
+
+            if (!centreId) {
+                loading.classList.add('hidden');
+                errorDiv.classList.remove('hidden');
+                errorMessage.textContent = 'Aucun centre spécifié.';
+                return;
+            }
+
+            try {
+                const centre = await getCentreById(centreId);
+
+                if (!centre) {
+                    throw new Error('Centre non trouvé');
+                }
+
+                // Afficher les données
+                centreNom.textContent = centre.nom || 'Nom non disponible';
+                centreLocalisation.textContent = centre.quartier && centre.commune
+                    ? `${centre.quartier}, ${centre.commune}`
+                    : (centre.commune || centre.quartier || 'Localisation non spécifiée');
+
+                centreAdresse.textContent = centre.adresse || '-';
+                centreCommune.textContent = centre.commune || '-';
+                centreQuartier.textContent = centre.quartier || '-';
+                centreHoraires.textContent = centre.horaires || '-';
+                centreVues.textContent = centre.nombre_vues || 0;
+
+                centreTelephone.textContent = centre.telephone || '-';
+                centreWhatsapp.textContent = centre.whatsapp || '-';
+                centreEmail.textContent = centre.email || '-';
+
+                // Boutons de contact
+                if (centre.telephone) {
+                    callBtn.href = `tel:${centre.telephone}`;
+                } else {
+                    callBtn.style.display = 'none';
+                }
+
+                if (centre.whatsapp) {
+                    const whatsappNumber = centre.whatsapp.replace(/\s/g, '').replace('+', '');
+                    whatsappBtn.href = `https://wa.me/${whatsappNumber}`;
+                } else {
+                    whatsappBtn.style.display = 'none';
+                }
+
+                // Logo
+                if (centre.logo) {
+                    logoContainer.innerHTML = `<img src="${centre.logo}" alt="${centre.nom}" class="w-full h-full object-cover" />`;
+                }
+
+                // Disciplines
+                if (centre.disciplines && centre.disciplines.length > 0) {
+                    disciplinesContainer.innerHTML = centre.disciplines.map(d =>
+                        `<span class="badge-discipline">${d.nom}</span>`
+                    ).join('');
+                } else {
+                    disciplinesContainer.innerHTML = '<span class="text-gray-400 text-sm">Aucune discipline</span>';
+                }
+
+                // Photos
+                if (centre.photos && centre.photos.length > 0) {
+                    photosContainer.classList.remove('hidden');
+                    photosGrid.innerHTML = centre.photos.map(photo =>
+                        `<img src="${photo}" alt="Photo du centre" class="rounded-lg w-full h-32 object-cover" />`
+                    ).join('');
+                }else {
+    photosContainer.classList.add('hidden');
+}
+
+                // Carte Leaflet
+                if (centre.latitude && centre.longitude) {
+                    const map = L.map('map-detail').setView([centre.latitude, centre.longitude], 15);
+
+                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        attribution: '&copy; OpenStreetMap contributors'
+                    }).addTo(map);
+
+                    L.marker([centre.latitude, centre.longitude])
+                        .addTo(map)
+                        .bindPopup(`<b>${centre.nom}</b><br />${centre.quartier}, ${centre.commune}`);
+                } else {
+                    document.getElementById('map-detail').innerHTML =
+                        '<p class="text-gray-400 text-sm text-center py-4">Localisation non disponible</p>';
+                }
+
+                // Afficher la page
+                loading.classList.add('hidden');
+                centreDetail.classList.remove('hidden');
+
+            } catch (error) {
+                console.error('Erreur:', error);
+                loading.classList.add('hidden');
+                errorDiv.classList.remove('hidden');
+                errorMessage.textContent = 'Centre non trouvé ou indisponible.';
+            }
+        }
+
+        // Lancer l'initialisation
+        init();
+    </script>
+
+</body>
+</html>

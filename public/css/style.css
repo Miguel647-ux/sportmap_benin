@@ -1,0 +1,334 @@
+/* ============================================
+   SPORTMAP BÉNIN — STYLES PERSONNALISÉS
+   ============================================ */
+
+/* Réinitialisation des marges et polices */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #FFFFFF;
+    color: #0A0A0A;
+}
+
+/* ============================================
+   BOUTONS
+   ============================================ */
+
+.btn-orange {
+    background-color: #FF6B00;
+    color: #FFFFFF;
+    transition: background-color 0.2s ease;
+}
+
+.btn-orange:hover {
+    background-color: #E05A00;
+}
+
+.btn-outline-orange {
+    border: 2px solid #FF6B00;
+    color: #FF6B00;
+    background: transparent;
+    transition: all 0.2s ease;
+}
+
+.btn-outline-orange:hover {
+    background: #FF6B00;
+    color: #FFFFFF;
+}
+
+/* ============================================
+   CARTES
+   ============================================ */
+
+.card {
+    background: #FFFFFF;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.15);
+}
+
+/* ============================================
+   CARTE LEAFLET
+   ============================================ */
+
+#map {
+    height: 400px;
+    width: 100%;
+    border-radius: 12px;
+    z-index: 1;
+}
+
+/* ============================================
+   HEADER TRANSPARENT → SOLIDE
+   ============================================ */
+
+.header-transparent {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 50;
+    padding: 16px 24px;
+    transition: all 0.4s ease;
+    background: transparent;
+}
+
+.header-solid {
+    background: rgba(15, 15, 15, 0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 12px 24px;
+}
+
+/* ============================================
+   HERO AVEC CARROUSEL
+   ============================================ */
+
+.hero-section {
+    position: relative;
+    min-height: 100vh;
+    background: #0A0A0A;
+    overflow: hidden;
+}
+
+/* Conteneur du carrousel */
+.hero-slider {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+/* Chaque slide */
+.hero-slide {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out;
+    transform: scale(1.05);
+}
+
+.hero-slide.active {
+    opacity: 0.5; /* 👈 Opacité légère pour laisser le texte lisible */
+}
+
+/* Overlay sombre par-dessus les images */
+.hero-overlay-light {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(10, 10, 10, 0.7) 0%, rgba(10, 10, 10, 0.3) 100%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Contenu centré (texte + bouton) */
+.hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    color: white;
+    padding: 40px 20px;
+}
+
+/* ============================================
+   DÉLIMITATION HERO → CONTENU
+   ============================================ */
+
+.hero-section::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 80px;
+    background: linear-gradient(to bottom, transparent, #F9FAFB);
+    z-index: 3;
+    pointer-events: none;
+}
+
+/* ============================================
+   SECTION RECHERCHE (transition propre)
+   ============================================ */
+
+.search-section {
+    position: relative;
+    z-index: 4;
+    margin-top: -40px;
+    padding-top: 20px;
+}
+
+/* ============================================
+   BOUTON HERO
+   ============================================ */
+
+.btn-hero {
+    background: #FF6B00;
+    color: #FFFFFF;
+    padding: 14px 36px;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 18px;
+    transition: all 0.3s ease;
+    display: inline-block;
+    box-shadow: 0 8px 32px rgba(255, 107, 0, 0.25);
+}
+
+.btn-hero:hover {
+    background: #E05A00;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(255, 107, 0, 0.35);
+}
+
+/* ============================================
+   FLÈCHE DE SCROLL
+   ============================================ */
+
+.animate-bounce {
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translate(-50%, 0); }
+    50% { transform: translate(-50%, -10px); }
+}
+
+/* ============================================
+   FAQ
+   ============================================ */
+
+.faq-section {
+    scroll-margin-top: 80px;
+}
+
+/* ============================================
+   FORMULAIRES ADMIN
+   ============================================ */
+
+.form-input {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid #E5E7EB;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: border-color 0.2s ease;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: #FF6B00;
+    box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.15);
+}
+
+.form-label {
+    display: block;
+    font-weight: 600;
+    font-size: 14px;
+    color: #0A0A0A;
+    margin-bottom: 4px;
+}
+
+.form-checkbox {
+    width: 18px;
+    height: 18px;
+    accent-color: #FF6B00;
+}
+
+/* ============================================
+   TABLEAU ADMIN
+   ============================================ */
+
+.table-admin {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.table-admin th {
+    background: #F9FAFB;
+    text-align: left;
+    padding: 12px 16px;
+    font-weight: 600;
+    color: #0A0A0A;
+    border-bottom: 2px solid #E5E7EB;
+}
+
+.table-admin td {
+    padding: 12px 16px;
+    border-bottom: 1px solid #E5E7EB;
+    vertical-align: middle;
+}
+
+.table-admin tr:hover {
+    background: #F9FAFB;
+}
+
+/* ============================================
+   BADGES
+   ============================================ */
+
+.badge-publie {
+    background: #10B981;
+    color: #FFFFFF;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.badge-brouillon {
+    background: #F59E0B;
+    color: #FFFFFF;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    display: inline-block;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media (max-width: 768px) {
+    #map {
+        height: 250px;
+    }
+
+    .header-transparent,
+    .header-solid {
+        padding: 12px 16px;
+    }
+
+    .hero-content h1 {
+        font-size: 2rem !important;
+    }
+
+    .hero-content p {
+        font-size: 1rem !important;
+    }
+
+    .table-admin {
+        font-size: 12px;
+    }
+
+    .table-admin th,
+    .table-admin td {
+        padding: 8px 10px;
+    }
+}

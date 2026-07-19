@@ -12,8 +12,8 @@ return new class extends Migration
             $table->unsignedBigInteger('id_centre');
             $table->unsignedBigInteger('id_discipline');
             $table->primary(['id_centre', 'id_discipline']);
-            $table->foreign('id_centre')->references('id_centre')->on('centres')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('id_discipline')->references('id_discipline')->on('disciplines')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('id_centre')->references('id_centre')->on('centres')->onDelete('cascade');
+            $table->foreign('id_discipline')->references('id_discipline')->on('disciplines')->onDelete('cascade');
             $table->timestamps();
         });
     }

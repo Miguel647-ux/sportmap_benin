@@ -13,23 +13,28 @@ return new class extends Migration
             $table->string('nom', 150);
             $table->text('description')->nullable();
             $table->string('adresse', 255)->nullable();
+            $table->string('commune', 100)->nullable();
+            $table->string('quartier', 100)->nullable();
             $table->decimal('latitude', 10, 7)->nullable();
             $table->decimal('longitude', 10, 7)->nullable();
             $table->string('telephone', 20)->nullable();
             $table->string('whatsapp', 20)->nullable();
             $table->string('email', 150)->nullable();
             $table->string('horaires', 255)->nullable();
+            $table->string('logo', 255)->nullable();
+            $table->json('photos')->nullable();
             $table->enum('statut', ['brouillon', 'publie'])->default('brouillon');
             $table->timestamp('date_creation')->useCurrent();
             $table->unsignedBigInteger('id_administrateur');
-            $table->unsignedBigInteger('id_quartier');
-            $table->foreign('id_administrateur')->references('id_administrateur')->on('administrateurs')->onDelete('restrict')->onUpdate('cascade');
-            $table->foreign('id_quartier')->references('id_quartier')->on('quartiers')->onDelete('restrict')->onUpdate('cascade');
             $table->timestamps();
 
+            $table->foreign('id_administrateur')
+                  ->references('id_administrateur')
+                  ->on('administrateurs')
+                  ->onDelete('restrict')
+                  ->onUpdate('cascade');
+
             $table->index('statut');
-            $table->index('id_quartier');
-            $table->index('id_administrateur');
             $table->index(['latitude', 'longitude']);
         });
     }

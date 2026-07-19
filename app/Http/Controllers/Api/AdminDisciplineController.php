@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreDisciplineRequest;
 use App\Models\Discipline;
+use Illuminate\Http\Request;
 
 class AdminDisciplineController extends Controller
 {

@@ -14,6 +14,7 @@ return new class extends Migration
             $table->string('email', 150)->unique();
             $table->string('mot_de_passe');
             $table->timestamp('date_inscription')->useCurrent();
+            $table->rememberToken();
             $table->timestamps();
         });
     }

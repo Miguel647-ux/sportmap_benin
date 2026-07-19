@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Connexion Administrateur — SportMap Bénin</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+    <!-- Styles personnalisés -->
+    <link rel="stylesheet" href="/css/style.css" />
+
+    <!-- Favicon -->
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/favicon.png" />
+<link rel="icon" type="image/png" sizes="192x192" href="/favicon.png" />
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #F9FAFB;
+        }
+
+        .login-box {
+            background: #FFFFFF;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            padding: 40px 35px;
+            width: 100%;
+            max-width: 420px;
+        }
+
+        .btn-orange {
+            background-color: #FF6B00;
+            color: #FFFFFF;
+            transition: background-color 0.2s ease;
+        }
+
+        .btn-orange:hover {
+            background-color: #E05A00;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="min-h-screen flex items-center justify-center px-4">
+        <div class="login-box">
+
+            <!-- Logo -->
+            <div class="text-center mb-8">
+                <h1 class="text-3xl font-extrabold text-[#0A0A0A]">SportMap Bénin</h1>
+                <p class="text-gray-500 text-sm mt-1">Connexion administrateur</p>
+            </div>
+
+            <!-- Formulaire -->
+            <form id="loginForm">
+                <div class="mb-4">
+                    <label for="email" class="form-label">
+                        <i class="fas fa-envelope text-[#FF6B00] mr-1"></i> Email
+                    </label>
+                    <input type="email" id="email" class="form-input" placeholder="admin@sportmap.bj" required />
+                </div>
+
+                <div class="mb-6">
+                    <label for="password" class="form-label">
+                        <i class="fas fa-lock text-[#FF6B00] mr-1"></i> Mot de passe
+                    </label>
+                    <input type="password" id="password" class="form-input" placeholder="••••••••" required />
+                </div>
+
+                <button type="submit" class="btn-orange w-full py-3 rounded-lg font-semibold text-white flex items-center justify-center gap-2">
+                    <i class="fas fa-arrow-right-to-bracket"></i> Se connecter
+                </button>
+
+                <div id="loginError" class="hidden mt-4 p-3 bg-red-50 text-red-600 text-sm rounded-lg border border-red-200">
+                    <i class="fas fa-exclamation-circle mr-1"></i> <span id="errorMessage">Identifiants incorrects.</span>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script type="module">
+        import { loginAdmin } from '/js/api.js';
+
+        const form = document.getElementById('loginForm');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const errorDiv = document.getElementById('loginError');
+        const errorMessage = document.getElementById('errorMessage');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const email = emailInput.value.trim();
+            const motDePasse = passwordInput.value.trim();
+
+            if (!email || !motDePasse) {
+                showError('Veuillez remplir tous les champs.');
+                return;
+            }
+
+            try {
+                const response = await loginAdmin(email, motDePasse);
+
+                // Stocker le token
+                localStorage.setItem('adminToken', response.token);
+                localStorage.setItem('adminUser', JSON.stringify(response.admin));
+
+                // Rediriger vers le dashboard
+                window.location.href = '/admin/dashboard.html';
+
+            } catch (error) {
+                console.error(error);
+                showError(error.message || 'Identifiants incorrects. Veuillez réessayer.');
+            }
+        });
+
+        function showError(message) {
+            errorMessage.textContent = message;
+            errorDiv.classList.remove('hidden');
+            setTimeout(() => {
+                errorDiv.classList.add('hidden');
+            }, 5000);
+        }
+    </script>
+
+</body>
+</html>
