@@ -1,9 +1,10 @@
 FROM php:8.4-apache
 
-# Installer les dépendances système (unzip, git)
+# Installer les dépendances système (dont libonig-dev pour mbstring)
 RUN apt-get update && apt-get install -y \
     unzip \
     git \
+    libonig-dev \
     && rm -rf /var/lib/apt/lists/*
 
 # Installer les extensions PHP nécessaires pour Laravel
