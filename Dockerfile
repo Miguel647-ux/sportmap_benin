@@ -1,7 +1,13 @@
 FROM php:8.4-apache
 
-# Installer les extensions PHP nécessaires
-RUN docker-php-ext-install pdo pdo_mysql
+# Installer les dépendances système (unzip, git)
+RUN apt-get update && apt-get install -y \
+    unzip \
+    git \
+    && rm -rf /var/lib/apt/lists/*
+
+# Installer les extensions PHP nécessaires pour Laravel
+RUN docker-php-ext-install pdo pdo_mysql mbstring exif fileinfo zip
 
 # Activer mod_rewrite pour Apache
 RUN a2enmod rewrite
@@ -16,7 +22,7 @@ RUN chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 # Installer Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Installer les dépendances PHP
+# Installer les dépendances PHP (sans les dev)
 RUN composer install --no-dev --optimize-autoloader
 
 # Configurer Apache pour pointer vers le dossier public
