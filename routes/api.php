@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\AdminDisciplineController;
 use App\Http\Controllers\Api\AdminLocaliteController;
 use App\Http\Controllers\Api\VisiteurCentreController;
 use App\Http\Controllers\Api\AdminStatsController;
+use App\Http\Controllers\Api\ContactController;
 
 // ============================================
 // ROUTES PUBLIQUES (Visiteur)
@@ -16,6 +17,7 @@ Route::prefix('visiteur')->group(function () {
     Route::get('/centres', [VisiteurCentreController::class, 'index']);
     Route::get('/centres/{centre}', [VisiteurCentreController::class, 'show']);
     Route::get('/disciplines', [VisiteurCentreController::class, 'disciplines']);
+     Route::post('/contact', [ContactController::class, 'store'])->middleware('throttle:5,1');
 });
 
 // ============================================
@@ -48,3 +50,5 @@ Route::prefix('admin')->middleware(['auth:sanctum', 'throttle:60,1'])->group(fun
 
     Route::get('/stats', [AdminStatsController::class, 'index']);
 });
+
+Route::get('/contacts', [ContactController::class, 'index'])->middleware('auth:sanctum');

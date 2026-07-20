@@ -306,3 +306,83 @@ document.addEventListener('DOMContentLoaded', async () => {
         `;
     }
 });
+
+// ============================================
+// CONTACT MODALE
+// ============================================
+
+const contactBtn = document.getElementById('contactBtn');
+const contactModal = document.getElementById('contactModal');
+const closeContactModal = document.getElementById('closeContactModal');
+const contactForm = document.getElementById('contactForm');
+const contactSubmit = document.getElementById('contactSubmit');
+const contactError = document.getElementById('contactError');
+const contactSuccess = document.getElementById('contactSuccess');
+
+// Ouvrir la modale
+contactBtn?.addEventListener('click', () => {
+    contactModal.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+});
+
+// Fermer la modale
+closeContactModal?.addEventListener('click', closeModal);
+contactModal?.addEventListener('click', (e) => {
+    if (e.target === contactModal) closeModal();
+});
+
+function closeModal() {
+    contactModal.classList.add('hidden');
+    document.body.style.overflow = '';
+    resetForm();
+}
+
+function resetForm() {
+    contactForm.reset();
+    contactError.classList.add('hidden');
+    contactSuccess.classList.add('hidden');
+    contactSubmit.disabled = false;
+    contactSubmit.innerHTML = '<i class="fas fa-paper-plane"></i> Envoyer';
+}
+
+// Soumission du formulaire
+contactForm?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const nom = document.getElementById('nom').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const message = document.getElementById('message').value.trim();
+
+    contactError.classList.add('hidden');
+    contactSuccess.classList.add('hidden');
+    contactSubmit.disabled = true;
+    contactSubmit.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Envoi en cours...';
+
+    try {
+        const response = await fetch('/api/visiteur/contact', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || '',
+            },
+            body: JSON.stringify({ nom, email, message }),
+        });
+
+        if (!response.ok) {
+            const err = await response.json();
+            throw new Error(err.message || 'Une erreur est survenue.');
+        }
+
+        const data = await response.json();
+        contactSuccess.classList.remove('hidden');
+        contactSuccess.textContent = data.message || '✅ Message envoyé avec succès.';
+        contactForm.reset();
+
+    } catch (error) {
+        contactError.textContent = error.message || 'Erreur lors de l\'envoi. Veuillez réessayer.';
+        contactError.classList.remove('hidden');
+    } finally {
+        contactSubmit.disabled = false;
+        contactSubmit.innerHTML = '<i class="fas fa-paper-plane"></i> Envoyer';
+    }
+});

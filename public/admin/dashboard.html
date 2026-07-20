@@ -187,14 +187,21 @@
 
         <!-- ACTIONS -->
         <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
-            <button id="openCreateModalBtn" class="btn-orange px-6 py-3 rounded-lg font-semibold flex items-center gap-2">
-                <i class="fas fa-plus-circle"></i> Ajouter un centre
-            </button>
-            <div class="flex gap-2">
-                <button id="manageDisciplinesBtn" class="btn-outline-orange px-4 py-2 rounded-lg font-medium text-sm">
-                    <i class="fas fa-tags mr-1"></i> Disciplines
-                </button>
-            </div>
+    <button id="openCreateModalBtn" class="btn-orange px-6 py-3 rounded-lg font-semibold flex items-center gap-2">
+        <i class="fas fa-plus-circle"></i> Ajouter un centre
+    </button>
+    <div class="flex gap-2">
+        <button id="showMessagesBtn" class="btn-outline-orange px-4 py-2 rounded-lg font-medium text-sm relative">
+            <i class="fas fa-envelope mr-1"></i> Messages
+            <span id="unreadBadge" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full px-2 py-0.5 hidden">0</span>
+        </button>
+        <button id="manageDisciplinesBtn" class="btn-outline-orange px-4 py-2 rounded-lg font-medium text-sm">
+            <i class="fas fa-tags mr-1"></i> Disciplines
+        </button>
+    </div>
+</div>
+
+            
         </div>
 
         <!-- TABLEAU DES CENTRES -->
@@ -224,6 +231,36 @@
             </div>
         </div>
     </main>
+
+    <!-- SECTION MESSAGES -->
+<div id="messagesSection" class="hidden mt-8">
+    <h2 class="text-xl font-bold text-[#0A0A0A] mb-4">
+        <i class="fas fa-envelope text-[#FF6B00] mr-2"></i> Messages des visiteurs
+    </h2>
+    <div class="bg-white rounded-xl shadow overflow-hidden">
+        <div class="overflow-x-auto">
+            <table class="table-admin">
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Email</th>
+                        <th>Message</th>
+                        <th>Statut</th>
+                        <th>Date</th>
+                        <th class="text-right">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="messagesTableBody">
+                    <tr>
+                        <td colspan="6" class="text-center py-8 text-gray-500">
+                            <i class="fas fa-spinner fa-spin mr-2"></i> Chargement...
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 
     <!-- MODALE AJOUT/MODIFICATION -->
     <div id="centreModal" class="modal">
@@ -526,6 +563,172 @@ document.getElementById('addDisciplineInlineBtn').addEventListener('click', asyn
                 `;
             }
         }
+
+        // ============================================
+// GESTION DES MESSAGES
+// ============================================
+
+let messagesData = [];
+
+async function loadMessages() {
+    try {
+        const response = await fetch('/api/admin/contacts', {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (!response.ok) throw new Error('Erreur de chargement');
+
+        messagesData = await response.json();
+        renderMessages(messagesData);
+        updateUnreadBadge(messagesData);
+
+    } catch (error) {
+        console.error(error);
+        document.getElementById('messagesTableBody').innerHTML = `
+            <tr>
+                <td colspan="6" class="text-center py-8 text-red-600">
+                    <i class="fas fa-exclamation-circle mr-2"></i>
+                    Erreur lors du chargement des messages.
+                </td>
+            </tr>
+        `;
+    }
+}
+
+function renderMessages(messages) {
+    const tbody = document.getElementById('messagesTableBody');
+
+    if (!messages || messages.length === 0) {
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="6" class="text-center py-8 text-gray-500">
+                    <i class="fas fa-inbox mr-2"></i>
+                    Aucun message reçu.
+                </td>
+            </tr>
+        `;
+        return;
+    }
+
+    tbody.innerHTML = messages.map(msg => `
+        <tr class="${!msg.lu ? 'bg-orange-50' : ''}">
+            <td class="font-medium">${msg.nom || 'Anonyme'}</td>
+            <td class="text-gray-600">${msg.email}</td>
+            <td class="text-gray-600 max-w-xs truncate" title="${msg.message}">${msg.message}</td>
+            <td>
+                <span class="${msg.lu ? 'badge-publie' : 'badge-brouillon'}">
+                    ${msg.lu ? 'Lu' : 'Non lu'}
+                </span>
+            </td>
+            <td class="text-gray-500 text-sm">${new Date(msg.created_at).toLocaleDateString('fr-FR')}</td>
+            <td class="text-right">
+                <div class="flex items-center justify-end gap-2">
+                    ${!msg.lu ? `
+                        <button class="btn-mark-read text-[#10B981] hover:text-[#059669] transition text-sm"
+                                data-id="${msg.id_contact}"
+                                title="Marquer comme lu">
+                            <i class="fas fa-check-circle"></i>
+                        </button>
+                    ` : ''}
+                    <button class="btn-delete-message text-gray-500 hover:text-red-600 transition text-sm"
+                            data-id="${msg.id_contact}"
+                            title="Supprimer">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            </td>
+        </tr>
+    `).join('');
+
+    // Événements
+    document.querySelectorAll('.btn-mark-read').forEach(btn => {
+        btn.addEventListener('click', () => handleMarkAsRead(parseInt(btn.dataset.id)));
+    });
+
+    document.querySelectorAll('.btn-delete-message').forEach(btn => {
+        btn.addEventListener('click', () => handleDeleteMessage(parseInt(btn.dataset.id)));
+    });
+}
+
+function updateUnreadBadge(messages) {
+    const badge = document.getElementById('unreadBadge');
+    const unreadCount = messages.filter(m => !m.lu).length;
+
+    if (unreadCount > 0) {
+        badge.textContent = unreadCount;
+        badge.classList.remove('hidden');
+    } else {
+        badge.classList.add('hidden');
+    }
+}
+
+async function handleMarkAsRead(id) {
+    try {
+        const response = await fetch(`/api/admin/contacts/${id}/read`, {
+            method: 'PUT',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (!response.ok) throw new Error('Erreur');
+
+        await loadMessages();
+
+    } catch (error) {
+        alert('Erreur lors du marquage.');
+    }
+}
+
+async function handleDeleteMessage(id) {
+    if (!confirm('Supprimer définitivement ce message ?')) return;
+
+    try {
+        const response = await fetch(`/api/admin/contacts/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (!response.ok) throw new Error('Erreur');
+
+        await loadMessages();
+
+    } catch (error) {
+        alert('Erreur lors de la suppression.');
+    }
+}
+
+// ============================================
+// BASCULE CENTRES / MESSAGES
+// ============================================
+
+document.getElementById('showMessagesBtn').addEventListener('click', function() {
+    const messagesSection = document.getElementById('messagesSection');
+    const centresContainer = document.querySelector('.bg-white.rounded-xl.shadow.overflow-hidden:not(#messagesSection)');
+    const centresParent = centresContainer?.parentNode;
+
+    if (messagesSection.classList.contains('hidden')) {
+        // Afficher les messages, cacher les centres
+        messagesSection.classList.remove('hidden');
+        if (centresContainer) centresContainer.style.display = 'none';
+        this.classList.add('bg-[#FF6B00]', 'text-white');
+        this.classList.remove('btn-outline-orange');
+        loadMessages();
+    } else {
+        // Afficher les centres, cacher les messages
+        messagesSection.classList.add('hidden');
+        if (centresContainer) centresContainer.style.display = '';
+        this.classList.remove('bg-[#FF6B00]', 'text-white');
+        this.classList.add('btn-outline-orange');
+    }
+});
 
         function renderTable(centres) {
             if (!centres || centres.length === 0) {
