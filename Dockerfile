@@ -1,14 +1,16 @@
 FROM php:8.4-apache
 
-# Installer les dépendances système (dont libonig-dev pour mbstring)
+# Installer les dépendances système
 RUN apt-get update && apt-get install -y \
     unzip \
     git \
     libonig-dev \
+    libzip-dev \
+    libpng-dev \
     && rm -rf /var/lib/apt/lists/*
 
 # Installer les extensions PHP nécessaires pour Laravel
-RUN docker-php-ext-install pdo pdo_mysql mbstring exif fileinfo zip
+RUN docker-php-ext-install pdo pdo_mysql mbstring exif fileinfo zip gd
 
 # Activer mod_rewrite pour Apache
 RUN a2enmod rewrite
