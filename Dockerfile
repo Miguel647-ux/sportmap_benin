@@ -28,7 +28,18 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Installer les dépendances PHP (sans les dev)
 RUN composer install --no-dev --optimize-autoloader
 
+RUN php artisan storage:link
+
+# Configurer Apache pour autoriser les fichiers statiques
+RUN echo 'Alias /storage /var/www/html/storage/app/public' >> /etc/apache2/apache2.conf
+RUN echo '<Directory /var/www/html/storage/app/public>' >> /etc/apache2/apache2.conf
+RUN echo '    Options Indexes FollowSymLinks' >> /etc/apache2/apache2.conf
+RUN echo '    AllowOverride All' >> /etc/apache2/apache2.conf
+RUN echo '    Require all granted' >> /etc/apache2/apache2.conf
+RUN echo '</Directory>' >> /etc/apache2/apache2.conf
+
 # Configurer Apache pour pointer vers le dossier public
 RUN sed -i 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available/000-default.conf
+
 
 EXPOSE 80
