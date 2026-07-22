@@ -28,10 +28,12 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Installer les dépendances PHP (sans les dev)
 RUN composer install --no-dev --optimize-autoloader
 
-# 👇 AJOUTE CETTE LIGNE
 RUN php artisan storage:link
+
+
 
 # Configurer Apache pour pointer vers le dossier public
 RUN sed -i 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available/000-default.conf
+
 
 EXPOSE 80

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Services\CloudinaryService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreCentreRequest;
 use App\Http\Requests\Admin\UpdateCentreRequest;
@@ -31,27 +32,24 @@ class AdminCentreController extends Controller
         return response()->json($centres);
     }
 
-   public function store(Request $request)
+   public function store(Request $request, CloudinaryService $cloudinary)
 {
     $data = $request->all();
     $data['id_administrateur'] = $request->user()->id_administrateur;
     $data['statut'] = $data['statut'] ?? 'brouillon';
 
-    // Logo
+    // Gérer le logo
     if ($request->hasFile('logo')) {
-        $logo = $request->file('logo');
-        $logoPath = $logo->store('centres/logos', 'public');
-        $data['logo'] = '/storage/' . $logoPath;
+        $data['logo'] = $cloudinary->upload($request->file('logo')->getRealPath(), 'sportmap/logos');
     }
 
-    // Photos
+    // Gérer les photos
     if ($request->hasFile('photos')) {
         $photosArray = [];
         foreach ($request->file('photos') as $photo) {
-            $path = $photo->store('centres/photos', 'public');
-            $photosArray[] = '/storage/' . $path;
+            $photosArray[] = $cloudinary->upload($photo->getRealPath(), 'sportmap/photos');
         }
-        $data['photos'] = $photosArray; // ← Pas de json_encode() ici
+        $data['photos'] = json_encode($photosArray);
     }
 
     $centre = Centre::create($data);
@@ -65,29 +63,27 @@ class AdminCentreController extends Controller
         'centre' => $centre->load(['disciplines']),
     ], 201);
 }
-
     public function show(Centre $centre)
     {
         return response()->json($centre->load(['disciplines']));
     }
 
-    public function update(Request $request, Centre $centre)
+   public function update(Request $request, Centre $centre, CloudinaryService $cloudinary)
 {
     $data = $request->all();
 
+    // Gérer le logo
     if ($request->hasFile('logo')) {
-        $logo = $request->file('logo');
-        $logoPath = $logo->store('centres/logos', 'public');
-        $data['logo'] = '/storage/' . $logoPath;
+        $data['logo'] = $cloudinary->upload($request->file('logo')->getRealPath(), 'sportmap/logos');
     }
 
+    // Gérer les photos
     if ($request->hasFile('photos')) {
         $photosArray = [];
         foreach ($request->file('photos') as $photo) {
-            $path = $photo->store('centres/photos', 'public');
-            $photosArray[] = '/storage/' . $path;
+            $photosArray[] = $cloudinary->upload($photo->getRealPath(), 'sportmap/photos');
         }
-        $data['photos'] = $photosArray; // ← Pas de json_encode() ici
+        $data['photos'] = json_encode($photosArray);
     }
 
     $centre->update($data);
