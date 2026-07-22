@@ -15,7 +15,9 @@ let userMarker;
  */
 export function initMap(centres = [], lat = 6.36, lng = 2.39) {
     // Créer la carte
-    map = L.map('map').setView([lat, lng], 12);
+   map = L.map('map', {
+    scrollWheelZoom: false
+}).setView([lat, lng], 12);
 
     // Ajouter le fond de carte (OpenStreetMap)
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {

@@ -610,7 +610,7 @@ function renderMessages(messages) {
                 </td>
             </tr>
         `;
-        return;
+        return
     }
 
     tbody.innerHTML = messages.map(msg => `
@@ -628,13 +628,13 @@ function renderMessages(messages) {
                 <div class="flex items-center justify-end gap-2">
                     ${!msg.lu ? `
                         <button class="btn-mark-read text-[#10B981] hover:text-[#059669] transition text-sm"
-                                data-id="${msg.id_contact}"
+                                data-id="${msg.id}"
                                 title="Marquer comme lu">
                             <i class="fas fa-check-circle"></i>
                         </button>
                     ` : ''}
                     <button class="btn-delete-message text-gray-500 hover:text-red-600 transition text-sm"
-                            data-id="${msg.id_contact}"
+                            data-id="${msg.id}"
                             title="Supprimer">
                         <i class="fas fa-trash"></i>
                     </button>

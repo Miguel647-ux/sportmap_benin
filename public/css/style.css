@@ -124,16 +124,21 @@ body {
 }
 
 .hero-slide.active {
-    opacity: 0.5; /* 👈 Opacité légère pour laisser le texte lisible */
+    opacity: 0.5; 
 }
 
 /* Overlay sombre par-dessus les images */
 .hero-overlay-light {
     position: absolute;
     inset: 0;
-    background: linear-gradient(180deg, rgba(10, 10, 10, 0.7) 0%, rgba(10, 10, 10, 0.3) 100%);
+     background: rgba(10, 10, 10, 0.55);
     pointer-events: none;
     z-index: 1;
+}
+
+video {
+    z-index: 0;
+    object-fit: cover;
 }
 
 /* Contenu centré (texte + bouton) */
@@ -331,4 +336,28 @@ body {
     .table-admin td {
         padding: 8px 10px;
     }
+}
+
+/* Menu latéral */
+#sideMenu {
+    transition: transform 0.3s ease-in-out;
+}
+
+#sideMenu a {
+    transition: color 0.2s ease;
+}
+
+#menuOverlay {
+    transition: opacity 0.3s ease;
+}
+
+/* Flèche retour en haut */
+#scrollToTopBtn {
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(255, 107, 0, 0.3);
+}
+
+#scrollToTopBtn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(255, 107, 0, 0.5);
 }

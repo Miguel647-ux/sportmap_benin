@@ -8,6 +8,8 @@ use App\Http\Controllers\Api\AdminLocaliteController;
 use App\Http\Controllers\Api\VisiteurCentreController;
 use App\Http\Controllers\Api\AdminStatsController;
 use App\Http\Controllers\Api\ContactController;
+use App\Http\Controllers\Api\AdminContactController;
+
 
 // ============================================
 // ROUTES PUBLIQUES (Visiteur)
@@ -36,6 +38,10 @@ Route::prefix('admin')->middleware(['auth:sanctum', 'throttle:60,1'])->group(fun
     // Auth
     Route::post('/logout', [AdminAuthController::class, 'logout']);
     Route::get('/me', [AdminAuthController::class, 'me']);
+    Route::get('/contacts', [AdminContactController::class, 'index']);
+     Route::put('/contacts/{contact}/read', [AdminContactController::class, 'markAsRead']);
+    Route::delete('/contacts/{contact}', [AdminContactController::class, 'destroy']);
+    
 
 
     // Centres

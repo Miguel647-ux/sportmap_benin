@@ -385,4 +385,169 @@ contactForm?.addEventListener('submit', async (e) => {
         contactSubmit.disabled = false;
         contactSubmit.innerHTML = '<i class="fas fa-paper-plane"></i> Envoyer';
     }
+    
+});
+
+// ============================================
+// MENU BURGER (Mobile)
+// ============================================
+
+document.addEventListener('DOMContentLoaded', function () {
+
+    const menuToggle = document.getElementById('menuToggle');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const closeMenu = document.getElementById('closeMenu');
+
+    if (menuToggle && mobileMenu) {
+        menuToggle.addEventListener('click', function () {
+            mobileMenu.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        });
+
+        if (closeMenu) {
+            closeMenu.addEventListener('click', function () {
+                mobileMenu.classList.add('hidden');
+                document.body.style.overflow = '';
+            });
+        }
+
+        mobileMenu.addEventListener('click', function (e) {
+            if (e.target === mobileMenu) {
+                mobileMenu.classList.add('hidden');
+                document.body.style.overflow = '';
+            }
+        });
+
+        // Fermer le menu quand on clique sur un lien
+        mobileMenu.querySelectorAll('a').forEach(function (link) {
+            link.addEventListener('click', function () {
+                mobileMenu.classList.add('hidden');
+                document.body.style.overflow = '';
+            });
+        });
+    }
+
+    // ============================================
+    // FAQ ACCORDÉON
+    // ============================================
+
+    document.querySelectorAll('.faq-toggle').forEach(function (button) {
+        button.addEventListener('click', function () {
+            const answer = button.nextElementSibling;
+            const icon = button.querySelector('.fa-chevron-down');
+
+            // Fermer les autres FAQ
+            document.querySelectorAll('.faq-answer').forEach(function (a) {
+                if (a !== answer) {
+                    a.classList.add('hidden');
+                    const otherIcon = a.closest('.bg-white').querySelector('.fa-chevron-down');
+                    if (otherIcon) otherIcon.style.transform = 'rotate(0deg)';
+                }
+            });
+
+            // Ouvrir/fermer celui-ci
+            answer.classList.toggle('hidden');
+            if (icon) {
+                icon.style.transform = answer.classList.contains('hidden') ? 'rotate(0deg)' : 'rotate(180deg)';
+            }
+        });
+    });
+
+});
+
+// ============================================
+// MENU LATÉRAL (GLISSANT DEPUIS LA DROITE)
+// ============================================
+
+document.addEventListener('DOMContentLoaded', function () {
+
+    const menuToggle = document.getElementById('menuToggle');
+    const sideMenu = document.getElementById('sideMenu');
+    const closeMenu = document.getElementById('closeMenu');
+    const overlay = document.getElementById('menuOverlay');
+    const menuIcon = document.getElementById('menuIcon');
+
+    function openMenu() {
+        sideMenu.classList.remove('translate-x-full');
+        overlay.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+        if (menuIcon) {
+            menuIcon.classList.remove('fa-bars');
+            menuIcon.classList.add('fa-times');
+        }
+    }
+
+    function closeMenuFunction() {
+        sideMenu.classList.add('translate-x-full');
+        overlay.classList.add('hidden');
+        document.body.style.overflow = '';
+        if (menuIcon) {
+            menuIcon.classList.remove('fa-times');
+            menuIcon.classList.add('fa-bars');
+        }
+    }
+
+    if (menuToggle) {
+        menuToggle.addEventListener('click', function () {
+            if (sideMenu.classList.contains('translate-x-full')) {
+                openMenu();
+            } else {
+                closeMenuFunction();
+            }
+        });
+    }
+
+    if (closeMenu) {
+        closeMenu.addEventListener('click', closeMenuFunction);
+    }
+
+    if (overlay) {
+        overlay.addEventListener('click', closeMenuFunction);
+    }
+
+    // Fermer le menu après avoir cliqué sur un lien
+    sideMenu.querySelectorAll('a').forEach(function (link) {
+        link.addEventListener('click', closeMenuFunction);
+    });
+
+});
+
+// ============================================
+// AFFICHER / CACHER "À PROPOS"
+// ============================================
+
+const aboutBtn = document.getElementById('aboutBtn');
+const aboutSection = document.getElementById('about-section');
+
+if (aboutBtn && aboutSection) {
+    aboutBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+        aboutSection.classList.toggle('hidden');
+
+        // Scroller vers la section si elle est ouverte
+        if (!aboutSection.classList.contains('hidden')) {
+            aboutSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    });
+}
+
+// ============================================
+// FLÈCHE RETOUR EN HAUT
+// ============================================
+
+const scrollBtn = document.getElementById('scrollToTopBtn');
+
+window.addEventListener('scroll', function () {
+    if (window.scrollY > 400) {
+        scrollBtn.classList.remove('hidden');
+    } else {
+        scrollBtn.classList.add('hidden');
+    }
+});
+
+scrollBtn.addEventListener('click', function () {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
 });

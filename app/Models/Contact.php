@@ -10,7 +10,7 @@ class Contact extends Model
     use HasFactory;
 
     protected $table = 'contacts';
-    protected $primaryKey = 'id_contact';
+    protected $primaryKey = 'id';
 
     protected $fillable = [
         'nom',
