@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FAQ — SportMap Bénin</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon.png" />
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0F0A1F;
+            color: #FFFFFF;
+        }
+
+        .glass {
+            background: rgba(15, 10, 31, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(168, 85, 247, 0.15);
+        }
+
+        .glass-card {
+            background: rgba(15, 10, 31, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(168, 85, 247, 0.2);
+            border-radius: 24px;
+            padding: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:hover {
+            border-color: rgba(250, 204, 21, 0.3);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #FACC15, #FBBF24);
+            color: #0F0A1F;
+            font-weight: 700;
+            padding: 12px 32px;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            display: inline-block;
+            font-size: 15px;
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 0 30px rgba(250, 204, 21, 0.3);
+            transform: scale(1.02);
+        }
+
+        .faq-item {
+            border-bottom: 1px solid rgba(168, 85, 247, 0.15);
+            overflow: hidden;
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+
+        .faq-question {
+            width: 100%;
+            text-align: left;
+            padding: 16px 20px;
+            background: transparent;
+            border: none;
+            color: #FFFFFF;
+            font-size: 16px;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question:hover {
+            color: #FACC15;
+        }
+
+        .faq-question i {
+            transition: transform 0.3s ease;
+            color: #FACC15;
+            font-size: 18px;
+        }
+
+        .faq-question.open i {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.3s ease;
+            padding: 0 20px;
+            color: #C4B5FD;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        .faq-answer.open {
+            max-height: 300px;
+            padding: 0 20px 20px 20px;
+        }
+
+        .faq-answer a {
+            color: #FACC15;
+            text-decoration: underline;
+        }
+
+        .faq-answer a:hover {
+            color: #FBBF24;
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0F0A1F;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #A855F7;
+            border-radius: 8px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #C026D3;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ==================== HEADER AVEC MENU BURGER ==================== -->
+    <header id="mainHeader" class="fixed top-0 left-0 w-full z-50 glass px-4 sm:px-6 py-2 sm:py-3 flex items-center justify-between transition-all duration-300">
+        <a href="/" class="flex items-center gap-3 text-white text-xl font-bold">
+            <img src="/images/logo.png" alt="SportMap Bénin" class="h-10 w-auto" />
+            <span class="hidden sm:inline">SportMap Bénin</span>
+        </a>
+
+        <nav class="hidden md:flex items-center gap-6 text-sm text-[#C4B5FD]">
+            <a href="/" class="hover:text-[#FACC15] transition">Accueil</a>
+            <a href="#results-section" class="hover:text-[#FACC15] transition">Carte</a>
+            <a href="/ajouter-un-centre.html" class="hover:text-[#FACC15] transition">Ajouter</a>
+            <a href="/a-propos.html" class="hover:text-[#FACC15] transition">À propos</a>
+            <a href="/faq.html" class="hover:text-[#FACC15] transition">FAQ</a>
+            <a href="/contact.html" class="hover:text-[#FACC15] transition">Contact</a>
+        </nav>
+
+        <div class="flex items-center gap-4">
+            <a href="/ajouter-un-centre.html" class="hidden md:inline-block btn-primary text-sm px-5 py-2">
+                <i class="fas fa-plus mr-1"></i> Ajouter
+            </a>
+            <button id="menuToggle" class="md:hidden text-white text-2xl">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- ==================== MENU LATÉRAL ==================== -->
+    <div id="sideMenu" class="fixed top-0 right-0 h-full w-72 bg-[#0F0A1F] shadow-2xl z-40 transform translate-x-full transition-transform duration-300 ease-in-out pt-20 px-6 border-l border-[#A855F7]/20">
+        <button id="closeMenu" class="absolute top-5 right-5 text-white text-3xl">&times;</button>
+        <nav class="flex flex-col gap-6 text-white text-lg">
+            <a href="/" class="hover:text-[#FACC15] transition border-b border-white/10 pb-3">Accueil</a>
+            <a href="#results-section" class="hover:text-[#FACC15] transition border-b border-white/10 pb-3">Carte</a>
+            <a href="/ajouter-un-centre.html" class="hover:text-[#FACC15] transition border-b border-white/10 pb-3">Ajouter</a>
+            <a href="/a-propos.html" class="hover:text-[#FACC15] transition border-b border-white/10 pb-3">À propos</a>
+            <a href="/faq.html" class="hover:text-[#FACC15] transition border-b border-white/10 pb-3">FAQ</a>
+            <a href="/contact.html" class="hover:text-[#FACC15] transition border-b border-white/10 pb-3">Contact</a>
+        </nav>
+    </div>
+
+    <!-- ==================== OVERLAY ==================== -->
+    <div id="menuOverlay" class="fixed inset-0 bg-black/50 z-30 hidden"></div>
+
+    <!-- ==================== HERO ==================== -->
+    <section class="min-h-[30vh] flex flex-col justify-center items-center text-center px-4 relative pt-24">
+        <div class="absolute inset-0 bg-[#0F0A1F]/70 z-0"></div>
+        <div class="relative z-10 max-w-4xl mx-auto">
+            <h1 class="text-4xl md:text-5xl font-extrabold text-white">Aide &amp; Support</h1>
+            <p class="text-[#C4B5FD] text-lg mt-4">Tout ce qu'il faut savoir pour utiliser SportMap Bénin.</p>
+        </div>
+    </section>
+
+    <!-- ==================== FAQ ACCORDÉON ==================== -->
+    <section class="max-w-4xl mx-auto px-4 py-16">
+        <div class="glass-card">
+
+            <!-- Question 1 -->
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    <span>1. Comment trouver un centre près de chez moi ?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                    Utilisez la barre de recherche sur la page d'accueil, les filtres par discipline ou commune, ou déplacez-vous sur la carte interactive pour voir les centres autour de vous.
+                </div>
+            </div>
+
+            <!-- Question 2 -->
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    <span>2. Comment contacter un centre ?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                    Cliquez sur "Voir détails" sur la fiche du centre, puis utilisez le bouton d'appel ou WhatsApp pour les contacter directement.
+                </div>
+            </div>
+
+            <!-- Question 3 -->
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    <span>3. Comment utiliser la carte interactive comme repère ?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                    La carte affiche tous les centres publiés avec des marqueurs. Vous pouvez zoomer, vous déplacer, et cliquer sur un marqueur pour voir les informations du centre. La carte se centre automatiquement sur votre position si vous autorisez la géolocalisation.
+                </div>
+            </div>
+
+            <!-- Question 4 -->
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    <span>4. Puis-je ajouter un centre sans créer de compte ?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                    Oui ! Vous pouvez ajouter un centre sans vous authentifier. Rendez-vous sur la page <a href="/ajouter-un-centre.html">Ajouter un centre</a>, remplissez le formulaire, et votre centre sera soumis à validation par l'administrateur avant publication.
+                </div>
+            </div>
+
+            <!-- Question 5 -->
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    <span>5. Qui gère les informations des centres ?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                    Seul l'administrateur de la plateforme peut valider, modifier ou supprimer les centres. Les informations sont vérifiées avant publication pour garantir leur fiabilité.
+                </div>
+            </div>
+
+            <!-- Question 6 -->
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    <span>6. Combien de temps faut-il pour qu'un centre soit validé ?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                    La validation est généralement effectuée dans les 48 heures suivant la soumission. Vous recevrez une confirmation par email une fois votre centre publié.
+                </div>
+            </div>
+
+            <!-- Question 7 -->
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    <span>7. Les avis et notes sont-ils fiables ?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                    Les notes affichées sur les fiches des centres sont basées sur les retours des utilisateurs. Elles sont modérées par l'administrateur pour garantir leur authenticité.
+                </div>
+            </div>
+
+            <!-- Question 8 -->
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    <span>8. Une question qui n'est pas listée ici ?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                    Envoyez-nous un message via la page <a href="/contact.html">Contact</a>. Nous vous répondrons dans les plus brefs délais.
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="border-t border-[#A855F7]/20 py-8 px-4">
+        <div class="max-w-7xl mx-auto text-center text-sm text-[#C4B5FD]">
+            &copy; 2026 SportMap Bénin — Tous droits réservés.
+        </div>
+    </footer>
+
+    <script src="/js/menu.js"></script>
+
+    <script>
+        function toggleFaq(button) {
+            const answer = button.nextElementSibling;
+            const icon = button.querySelector('.fa-chevron-down');
+
+            document.querySelectorAll('.faq-answer').forEach(function(el) {
+                if (el !== answer) {
+                    el.classList.remove('open');
+                    const btn = el.previousElementSibling;
+                    const otherIcon = btn.querySelector('.fa-chevron-down');
+                    if (otherIcon) otherIcon.style.transform = 'rotate(0deg)';
+                    btn.classList.remove('open');
+                }
+            });
+
+            document.querySelectorAll('.faq-question').forEach(function(btn) {
+                if (btn !== button) {
+                    btn.classList.remove('open');
+                }
+            });
+
+            answer.classList.toggle('open');
+            button.classList.toggle('open');
+
+            if (answer.classList.contains('open')) {
+                icon.style.transform = 'rotate(180deg)';
+            } else {
+                icon.style.transform = 'rotate(0deg)';
+            }
+        }
+    </script>
+
+</body>
+</html>

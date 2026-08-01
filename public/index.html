@@ -21,454 +21,422 @@
     <link rel="stylesheet" href="/css/style.css" />
 
     <!-- Favicon -->
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon.png" />
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
-<link rel="apple-touch-icon" sizes="180x180" href="/favicon.png" />
-<link rel="icon" type="image/png" sizes="192x192" href="/favicon.png" />
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="/favicon.png" />
 
     <style>
         body {
             font-family: 'Inter', sans-serif;
+            background: #0F0A1F;
+            color: #FFFFFF;
+        }
+
+        .glass {
+            background: rgba(15, 10, 31, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(168, 85, 247, 0.15);
+        }
+
+        .glass-card {
+            background: rgba(15, 10, 31, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(168, 85, 247, 0.2);
+            border-radius: 24px;
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:hover {
+            border-color: rgba(250, 204, 21, 0.3);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #FACC15, #FBBF24);
+            color: #0F0A1F;
+            font-weight: 700;
+            padding: 16px 36px;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            display: inline-block;
+            border: none;
+            cursor: pointer;
+            font-size: 17px;
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 0 30px rgba(250, 204, 21, 0.3);
+            transform: scale(1.02);
+        }
+
+        .btn-secondary {
+            background: rgba(168, 85, 247, 0.15);
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            color: #FFFFFF;
+            font-weight: 600;
+            padding: 16px 36px;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            display: inline-block;
+            cursor: pointer;
+            font-size: 17px;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(168, 85, 247, 0.3);
+            border-color: #A855F7;
         }
 
         .card {
-            background: #FFFFFF;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px -1px rgba(22, 22, 22, 0.1);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            background: rgba(15, 10, 31, 0.6);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(168, 85, 247, 0.15);
+            border-radius: 16px;
+            transition: all 0.3s ease;
         }
 
         .card:hover {
+            border-color: rgba(250, 204, 21, 0.3);
             transform: translateY(-4px);
-            box-shadow: 0 10px 20px -5px rgba(177, 31, 31, 0.15);
         }
 
         #map {
             height: 400px;
             width: 100%;
-            border-radius: 12px;
+            border-radius: 16px;
             z-index: 1;
+            border: 1px solid rgba(168, 85, 247, 0.15);
         }
 
         .faq-section {
             scroll-margin-top: 80px;
         }
 
-        .btn-orange {
-            background-color: #FF6B00;
+        .hero-section {
+            position: relative;
+            min-height: 100vh;
+            background: #0F0A1F;
+            overflow: hidden;
+        }
+
+        .hero-overlay-light {
+            position: absolute;
+            inset: 0;
+            background: rgba(15, 10, 31, 0.6);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        video {
+            z-index: 0;
+            object-fit: cover;
+        }
+
+        .hero-section::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 80px;
+            background: linear-gradient(to bottom, transparent, #0F0A1F);
+            z-index: 3;
+            pointer-events: none;
+        }
+
+        .animate-bounce {
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translate(-50%, 0); }
+            50% { transform: translate(-50%, -10px); }
+        }
+
+        input, select {
+            background: rgba(15, 10, 31, 0.6);
+            border: 1px solid rgba(168, 85, 247, 0.2);
             color: #FFFFFF;
-            transition: background-color 0.2s ease;
+            border-radius: 16px;
+            padding: 16px 22px;
+            transition: all 0.3s ease;
+            width: 100%;
+            font-size: 17px;
+            min-height: 58px;
         }
 
-        .btn-orange:hover {
-            background-color: #E05A00;
+        input:focus, select:focus {
+            outline: none;
+            border-color: #A855F7;
+            box-shadow: 0 0 0 4px rgba(168, 85, 247, 0.15);
         }
 
-        .btn-outline-orange {
-            border: 2px solid #FF6B00;
-            color: #FF6B00;
-            background: transparent;
-            transition: all 0.2s ease;
+        input::placeholder {
+            color: #A5B4FC;
+            font-size: 17px;
+            padding-left: 2px;
         }
 
-        .btn-outline-orange:hover {
-            background: #FF6B00;
-            color: #FFFFFF;
+        .search-container {
+            padding: 20px 24px;
+            gap: 16px;
+            border-radius: 24px;
+            background: rgba(15, 10, 31, 0.4);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(168, 85, 247, 0.15);
+        }
+
+        .search-container input,
+        .search-container select {
+            min-width: 0;
+        }
+
+        @media (min-width: 768px) {
+            .search-container input {
+                min-width: 240px;
+            }
+            .search-container select {
+                min-width: 160px;
+            }
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0F0A1F;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #A855F7;
+            border-radius: 8px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #C026D3;
         }
     </style>
 </head>
 
 <body>
 
-    <!-- ==================== HEADER AVEC MENU LATÉRAL ==================== -->
-<header id="mainHeader" class="header-transparent fixed top-0 left-0 w-full z-50 flex items-center justify-between px-4 md:px-6 py-1 transition-all duration-300">
-    <!-- Logo -->
-    <a href="/" class="flex items-center">
-        <img src="/images/logo1-sportmap.png" alt="SportMap Bénin" class="h-16 md:h-20 w-auto" />
-    </a>
+    <!-- ==================== HEADER ==================== -->
+    <header id="mainHeader" class="fixed top-0 left-0 w-full z-50 glass px-4 sm:px-6 py-2 sm:py-3 flex items-center justify-between transition-all duration-300">
+        <a href="/" class="flex items-center gap-3 text-white text-xl font-bold">
+            <img src="/images/logo.png" alt="SportMap Bénin" class="h-12 w-auto" />
+            <span class="hidden sm:inline">SportMap Bénin</span>
+        </a>
 
-    <!-- Menu desktop -->
-    <nav class="hidden md:flex items-center gap-6">
-        <a href="#results-section" class="text-white text-sm font-medium hover:text-[#FF6B00] transition">Rechercher des centres</a>
-        <a href="#faq" class="text-white text-sm font-medium hover:text-[#FF6B00] transition">FAQ</a>
-    </nav>
+        <nav class="hidden md:flex items-center gap-6 text-sm text-[#C4B5FD]">
+            <a href="/" class="hover:text-[#FACC15] transition">Accueil</a>
+            <a href="#results-section" class="hover:text-[#FACC15] transition">Carte</a>
+            <a href="/ajouter-un-centre.html" class="hover:text-[#FACC15] transition">Ajouter</a>
+            <a href="/a-propos.html" class="hover:text-[#FACC15] transition">À propos</a>
+            <a href="/faq.html" class="hover:text-[#FACC15] transition">FAQ</a>
+            <a href="/contact.html" class="hover:text-[#FACC15] transition">Contact</a>
+        </nav>
 
-    <!-- Bouton burger (visible sur mobile) -->
-    <button id="menuToggle" class="md:hidden text-white text-2xl focus:outline-none z-50 relative">
-        <i class="fas fa-bars" id="menuIcon"></i>
+        <div class="flex items-center gap-4">
+            <a href="/ajouter-un-centre.html" class="hidden md:inline-block btn-primary text-sm px-5 py-2">
+                <i class="fas fa-plus mr-1"></i> Ajouter
+            </a>
+            <button id="menuToggle" class="md:hidden text-white text-2xl">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- ==================== MENU LATÉRAL ==================== -->
+    <div id="sideMenu" class="fixed top-0 right-0 h-full w-72 bg-[#0F0A1F] shadow-2xl z-40 transform translate-x-full transition-transform duration-300 ease-in-out pt-20 px-6 border-l border-[#A855F7]/20">
+        <button id="closeMenu" class="absolute top-5 right-5 text-white text-3xl">&times;</button>
+        <nav class="flex flex-col gap-6 text-white text-lg">
+            <a href="/" class="hover:text-[#FACC15] transition border-b border-white/10 pb-3">Accueil</a>
+            <a href="#results-section" class="hover:text-[#FACC15] transition border-b border-white/10 pb-3">Carte</a>
+            <a href="/ajouter-un-centre.html" class="hover:text-[#FACC15] transition border-b border-white/10 pb-3">Ajouter</a>
+            <a href="/a-propos.html" class="hover:text-[#FACC15] transition border-b border-white/10 pb-3">À propos</a>
+            <a href="/faq.html" class="hover:text-[#FACC15] transition border-b border-white/10 pb-3">FAQ</a>
+            <a href="/contact.html" class="hover:text-[#FACC15] transition border-b border-white/10 pb-3">Contact</a>
+        </nav>
+    </div>
+
+    <div id="menuOverlay" class="fixed inset-0 bg-black/50 z-30 hidden"></div>
+
+    <!-- ==================== HERO ==================== -->
+    <section class="hero-section flex flex-col justify-center items-center text-center px-4 pt-24 md:pt-0 pb-8 relative overflow-hidden" style="min-height: 100vh;">
+
+        <video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover z-0">
+            <source src="https://res.cloudinary.com/drgezonv4/video/upload/v1784753464/Video_Project_byzaru.mp4" type="video/mp4" />
+        </video>
+
+        <div class="hero-overlay-light"></div>
+
+        <div class="relative z-10 max-w-5xl mx-auto w-full">
+            <h1 class="text-white text-3xl sm:text-4xl md:text-6xl font-extrabold leading-tight tracking-tight">
+                Trouvez votre <span class="text-[#FACC15]">centre sportif</span>
+            </h1>
+            <p class="text-gray-300 text-base sm:text-lg md:text-xl mt-3 sm:mt-4 font-light tracking-wide max-w-2xl mx-auto px-2">
+                L'annuaire de référence des centres de formation sportive au Bénin, par discipline et par ville.
+            </p>
+
+            <div class="search-container flex flex-col md:flex-row items-stretch mt-6 sm:mt-8 max-w-4xl mx-auto">
+    <input type="text" id="searchInput" placeholder="Rechercher un centre..." class="form-input-wide flex-1" />
+    <select id="disciplineFilter" class="form-input-wide md:w-48">
+        <option value="">Discipline</option>
+    </select>
+    <select id="communeFilter" class="form-input-wide md:w-48">
+        <option value="">Commune</option>
+    </select>
+    <button id="searchBtn" class="btn-primary flex items-center justify-center gap-2 whitespace-nowrap md:w-auto">
+        <i class="fas fa-search"></i> Rechercher
     </button>
-</header>
-
-<!-- ==================== MENU LATÉRAL ==================== -->
-<div id="sideMenu" class="fixed top-0 right-0 h-full w-72 bg-[#0A0A0A] shadow-2xl z-40 transform translate-x-full transition-transform duration-300 ease-in-out pt-20 px-6">
-    <button id="closeMenu" class="absolute top-5 right-5 text-white text-3xl">&times;</button>
-    <nav class="flex flex-col gap-6 text-white text-lg">
-        <a href="#results-section" class="hover:text-[#FF6B00] transition border-b border-white/10 pb-3">Rechercher des centres</a>
-        <a href="#faq" class="hover:text-[#FF6B00] transition border-b border-white/10 pb-3">FAQ</a>
-        <a href="#contact-section" class="hover:text-[#FF6B00] transition border-b border-white/10 pb-3">Contact</a>
-    </nav>
 </div>
 
-<!-- Overlay (fond sombre derrière le menu) -->
-<div id="menuOverlay" class="fixed inset-0 bg-black/50 z-30 hidden"></div>
+            <div class="mt-5 sm:mt-6 flex flex-wrap justify-center gap-3 sm:gap-4">
+                <a href="#results-section" class="btn-primary text-sm sm:text-base">Voir les centres</a>
+                <a href="/ajouter-un-centre.html" class="btn-secondary text-sm sm:text-base">
+                    <i class="fas fa-plus mr-1"></i> Ajouter
+                </a>
+            </div>
+        </div>
 
-    <!-- ==================== HERO AVEC VIDÉO EN ARRIÈRE-PLAN ==================== -->
-<section class="hero-section min-h-screen flex flex-col justify-center items-center text-center px-4 relative overflow-hidden">
+        <div class="absolute bottom-6 sm:bottom-8 left-1/2 transform -translate-x-1/2 z-10 animate-bounce">
+            <i class="fas fa-chevron-down text-white/60 text-xl sm:text-2xl"></i>
+        </div>
 
-    <!-- Vidéo en arrière-plan -->
-    <video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover z-0">
-        <source src="https://res.cloudinary.com/drgezonv4/video/upload/v1784753464/Video_Project_byzaru.mp4" type="video/mp4" />
-    </video>
+    </section>
 
-    <!-- Overlay léger -->
-    <div class="hero-overlay-light"></div>
+    <!-- ==================== SECTION POURQUOI ==================== -->
+    <section class="py-16 px-4">
+        <div class="max-w-6xl mx-auto text-center">
+            <h2 class="text-3xl md:text-4xl font-extrabold text-white mb-4">
+                Pourquoi <span class="text-[#FACC15]">SportMap Bénin</span> ?
+            </h2>
+            <p class="text-gray-400 text-lg max-w-2xl mx-auto mb-12">
+                Une plateforme conçue pour connecter les sportifs aux centres de formation, partout au Bénin.
+            </p>
 
-    <!-- Contenu centré -->
-    <div class="relative z-10 max-w-4xl mx-auto">
-        <h1 class="text-white text-4xl md:text-6xl font-extrabold leading-tight tracking-tight">
-            Trouvez votre <span class="text-[#FF6B00]">centre sportif</span>
-        </h1>
-        <p class="text-gray-300 text-lg md:text-xl mt-4 font-light tracking-wide">
-            L'annuaire de référence des centres de formation sportive au Bénin, par discipline et par ville.
-        </p>
-        <a href="#results-section" class="inline-block mt-8 bg-[#FF6B00] hover:bg-[#E05A00] text-white font-semibold px-8 py-4 rounded-full text-lg transition duration-300 shadow-lg hover:shadow-xl">
-            Rechercher des centres
-        </a>
-    </div>
-
-    <!-- Flèche vers le bas -->
-    <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce z-10">
-        <i class="fas fa-chevron-down text-white text-2xl opacity-70"></i>
-    </div>
-
-</section>
-
-    <!-- ==================== BARRE DE RECHERCHE ==================== -->
-    <section class="search-section bg-[#F9FAFB] py-8 px-4 shadow-inner">
-        <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-xl p-4 flex flex-col md:flex-row gap-3">
-            <input type="text" id="searchInput" placeholder="Rechercher un centre..." class="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#FF6B00]" />
-
-            <select id="disciplineFilter" class="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#FF6B00] bg-white">
-                <option value="">Toutes les disciplines</option>
-            </select>
-
-            <select id="communeFilter" class="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#FF6B00] bg-white">
-                <option value="">Toutes les communes</option>
-            </select>
-
-            <button id="searchBtn" class="btn-orange px-6 py-3 rounded-lg font-semibold flex items-center justify-center">
-                <i class="fas fa-search"></i> Rechercher
-            </button>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="glass-card p-8 text-center">
+                    <div class="w-16 h-16 bg-[#A855F7]/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-search text-[#FACC15] text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Trouver</h3>
+                    <p class="text-gray-400 text-sm">Trouvez facilement un centre près de chez vous, par discipline ou par ville.</p>
+                </div>
+                <div class="glass-card p-8 text-center">
+                    <div class="w-16 h-16 bg-[#A855F7]/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-phone-alt text-[#FACC15] text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Contacter</h3>
+                    <p class="text-gray-400 text-sm">Contactez directement les centres grâce à leurs coordonnées complètes.</p>
+                </div>
+                <div class="glass-card p-8 text-center">
+                    <div class="w-16 h-16 bg-[#A855F7]/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-hand-holding-heart text-[#FACC15] text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">S'engager</h3>
+                    <p class="text-gray-400 text-sm">Ajoutez un centre que vous connaissez et contribuez à enrichir l'annuaire.</p>
+                </div>
+            </div>
         </div>
     </section>
 
     <!-- ==================== CARTE + RÉSULTATS ==================== -->
     <section id="results-section" class="max-w-7xl mx-auto px-4 py-10">
-        <!-- Carte -->
+        <div class="flex items-center justify-between mb-6">
+            <h2 class="text-2xl font-bold text-white">Carte interactive</h2>
+        </div>
+
         <div id="map" class="mb-8"></div>
 
-        <!-- Résultats -->
         <div id="resultsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <!-- Centres injectés par JS -->
         </div>
 
-        <!-- Pagination -->
-        <div id="pagination" class="flex justify-center items-center gap-3 mt-8">
-            <!-- Généré par JS -->
-        </div>
+        <div id="pagination" class="flex justify-center items-center gap-3 mt-8"></div>
     </section>
 
-    <!-- ==================== FAQ ACCORDÉON ==================== -->
-<section id="faq" class="faq-section bg-[#F9FAFB] py-16 px-4">
-    <div class="max-w-4xl mx-auto">
-        <h2 class="text-3xl font-extrabold text-[#0A0A0A] text-center mb-10">
-            <i class="fas fa-question-circle text-[#FF6B00] mr-2"></i> Aide &amp; Support
-        </h2>
-        <p class="text-center text-gray-500 mb-8">Tout ce qu'il faut savoir pour utiliser SportMap Bénin.</p>
-
-        <div class="space-y-3" id="faqContainer">
-            <!-- FAQ item 1 -->
-            <div class="bg-white rounded-xl shadow overflow-hidden">
-                <button class="faq-toggle w-full text-left px-6 py-4 font-semibold text-[#0A0A0A] hover:bg-gray-50 transition flex justify-between items-center">
-                    <span><i class="fas fa-search text-[#FF6B00] mr-3"></i> Comment trouver un centre près de chez moi ?</span>
-                    <i class="fas fa-chevron-down text-[#FF6B00] transition-transform"></i>
-                </button>
-                <div class="faq-answer hidden px-6 pb-4 text-gray-600 text-sm">
-                    Utilisez la barre de recherche, les filtres par discipline ou commune, ou déplacez-vous sur la carte interactive pour voir les centres autour de vous.
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="border-t border-[#A855F7]/20 pt-12 pb-6 px-4">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+                <div>
+                    <h2 class="text-2xl font-extrabold text-[#FACC15] mb-3">SportMap Bénin</h2>
+                    <p class="text-gray-400 text-sm leading-relaxed">L'annuaire de référence des centres de formation sportive au Bénin.</p>
+                </div>
+                <div>
+                    <h3 class="text-md font-semibold text-white mb-3">Liens rapides</h3>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="/" class="hover:text-[#FACC15] transition">Accueil</a></li>
+                        <li><a href="/a-propos.html" class="hover:text-[#FACC15] transition">À propos</a></li>
+                        <li><a href="/faq.html" class="hover:text-[#FACC15] transition">FAQ</a></li>
+                        <li><a href="/contact.html" class="hover:text-[#FACC15] transition">Contact</a></li>
+                    </ul>
                 </div>
             </div>
-
-            <!-- FAQ item 2 -->
-            <div class="bg-white rounded-xl shadow overflow-hidden">
-                <button class="faq-toggle w-full text-left px-6 py-4 font-semibold text-[#0A0A0A] hover:bg-gray-50 transition flex justify-between items-center">
-                    <span><i class="fas fa-phone text-[#FF6B00] mr-3"></i> Comment contacter un centre ?</span>
-                    <i class="fas fa-chevron-down text-[#FF6B00] transition-transform"></i>
-                </button>
-                <div class="faq-answer hidden px-6 pb-4 text-gray-600 text-sm">
-                    Cliquez sur "Voir détails" sur la fiche du centre, puis utilisez le bouton d'appel ou WhatsApp pour les contacter directement.
-                </div>
-            </div>
-
-            <!-- FAQ item 3 -->
-            <div class="bg-white rounded-xl shadow overflow-hidden">
-                <button class="faq-toggle w-full text-left px-6 py-4 font-semibold text-[#0A0A0A] hover:bg-gray-50 transition flex justify-between items-center">
-                    <span><i class="fas fa-info-circle text-[#FF6B00] mr-3"></i> Qui gère les informations des centres ?</span>
-                    <i class="fas fa-chevron-down text-[#FF6B00] transition-transform"></i>
-                </button>
-                <div class="faq-answer hidden px-6 pb-4 text-gray-600 text-sm">
-                    Seul l'administrateur de la plateforme peut ajouter, modifier ou supprimer les centres. Les informations sont vérifiées avant publication.
-                </div>
-            </div>
-
-            <!-- FAQ item 4 (question non listée) -->
-            <div class="bg-white rounded-xl shadow overflow-hidden">
-                <button class="faq-toggle w-full text-left px-6 py-4 font-semibold text-[#0A0A0A] hover:bg-gray-50 transition flex justify-between items-center">
-                    <span><i class="fas fa-question-circle text-[#FF6B00] mr-3"></i> Une question qui n'est pas listée ici ?</span>
-                    <i class="fas fa-chevron-down text-[#FF6B00] transition-transform"></i>
-                </button>
-                <div class="faq-answer hidden px-6 pb-4 text-gray-600 text-sm">
-                    Envoyez-nous un message via le formulaire de contact ci-dessous.
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- ==================== SECTION CONTACT ==================== -->
-<section id="contact-section" class="bg-[#F9FAFB] py-16 px-4">
-    <div class="max-w-2xl mx-auto">
-        <h2 class="text-3xl font-extrabold text-[#0A0A0A] text-center mb-2">
-            <i class="fas fa-envelope text-[#FF6B00] mr-2"></i> Nous contacter
-        </h2>
-        <p class="text-gray-500 text-center mb-8">Une question, une suggestion, une information erronée ? Écrivez-nous !</p>
-
-        <div class="bg-white rounded-2xl shadow-xl p-6 md:p-8">
-            <form id="contactForm">
-                <div class="mb-4">
-                    <label class="form-label">Votre nom</label>
-                    <input type="text" id="nom" class="form-input" placeholder="Jean Dupont" />
-                </div>
-                <div class="mb-4">
-                    <label class="form-label">Votre email *</label>
-                    <input type="email" id="email" class="form-input" placeholder="jean@exemple.com" required />
-                </div>
-                <div class="mb-4">
-                    <label class="form-label">Votre message *</label>
-                    <textarea id="message" rows="4" class="form-input" placeholder="Décrivez votre demande..." required></textarea>
-                </div>
-                <div id="contactError" class="hidden text-red-600 text-sm mb-3"></div>
-                <div id="contactSuccess" class="hidden text-green-600 text-sm mb-3"></div>
-                <button type="submit" id="contactSubmit" class="btn-orange w-full py-3 rounded-lg font-semibold flex items-center justify-center gap-2">
-                    <i class="fas fa-paper-plane"></i> Envoyer le message
-                </button>
-            </form>
-        </div>
-    </div>
-</section>
-
-<!-- ==================== SECTION À PROPOS ==================== -->
-<section id="about-section" class="bg-[#F9FAFB] py-16 px-4 border-t border-gray-200 hidden">
-    <div class="max-w-4xl mx-auto text-center">
-        <h2 class="text-3xl font-extrabold text-[#0A0A0A] mb-4">
-            <i class="fas fa-info-circle text-[#FF6B00] mr-2"></i> À propos de SportMap Bénin
-        </h2>
-        <p class="text-gray-600 text-lg leading-relaxed">
-            SportMap Bénin est une plateforme de géolocalisation dédiée aux centres de formation sportive au Bénin.
-            <br /><br />
-            Notre mission est de permettre à tout sportif, parent ou jeune talent de trouver facilement un centre près de chez lui,
-            avec les bonnes disciplines et les bons contacts.
-            <br /><br />
-            Que vous soyez footballeur, basketteur, judoka, nageur ou tennisman, SportMap Bénin vous aide à trouver votre chemin vers l’excellence sportive.
-            <br /><br />
-            <span class="text-sm text-gray-400">SportMap Bénin — L'annuaire de référence des centres sportifs au Bénin.</span>
-        </p>
-    </div>
-</section>
-
-  <!-- ==================== FOOTER ==================== -->
-<footer class="bg-[#0A0A0A] text-white pt-12 pb-6 px-4">
-    <div class="max-w-7xl mx-auto">
-
-         <!-- Grille : 2 colonnes sur desktop, 1 sur mobile -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-
-            <!-- Colonne 2 : Logo + description -->
-            <div>
-                <h2 class="text-2xl font-extrabold text-[#FF6B00] mb-3">SportMap Bénin</h2>
-                <p class="text-gray-400 text-sm leading-relaxed">
-                    L'annuaire de référence des centres de formation sportive au Bénin. 
-                    Trouvez facilement un centre près de chez vous, par discipline et par ville.
-                </p>
-            </div>
-
-             <!-- Colonne 1 : Liens rapides -->
-            <div>
-                <h3 class="text-md font-semibold text-white mb-3">Liens rapides</h3>
-                <ul class="space-y-2 text-sm">
-                    <li><a href="#results-section" class="text-gray-400 hover:text-[#FF6B00] transition">Rechercher des centres</a></li>
-                    <li><a href="#faq" class="text-gray-400 hover:text-[#FF6B00] transition">FAQ</a></li>
-                    <li><a href="#contact-section" class="text-gray-400 hover:text-[#FF6B00] transition">Nous contacter</a></li>
-                    <li><button id="aboutBtn" class="hover:text-[#FF6B00] transition cursor-pointer">À propos</button></li>
-                </ul>
-            </div>
-
-        </div>
-
-        <!-- Séparateur -->
-        <div class="border-t border-gray-700 pt-6">
-            <p class="text-center text-xs text-gray-500">
+            <div class="border-t border-[#A855F7]/20 pt-6 text-center text-sm text-gray-500">
                 &copy; 2026 SportMap Bénin — Tous droits réservés.
-            </p>
+            </div>
         </div>
+    </footer>
 
-    </div>
-</footer>
-
-    <!-- Flèche retour en haut -->
-    <button id="scrollToTopBtn" class="fixed bottom-8 right-8 bg-[#FF6B00] text-white w-12 h-12 rounded-full shadow-lg flex items-center justify-center text-xl hover:bg-[#E05A00] transition transform hover:scale-110 hidden z-50">
+    <!-- FLÈCHE RETOUR EN HAUT -->
+    <button id="scrollToTopBtn" class="fixed bottom-8 right-8 bg-[#FACC15] text-[#0F0A1F] w-12 h-12 rounded-full shadow-lg flex items-center justify-center text-xl hover:scale-110 transition-transform z-50 hidden">
         <i class="fas fa-chevron-up"></i>
     </button>
-</footer>
-
-    <!-- MODALE CONTACT -->
-<div id="contactModal" class="fixed inset-0 z-50 flex items-center justify-center hidden bg-black/50 backdrop-blur-sm">
-    <div class="bg-white rounded-2xl shadow-2xl max-w-lg w-full mx-4 p-6 relative">
-        <button id="closeContactModal" class="absolute top-3 right-4 text-gray-500 hover:text-[#FF6B00] text-2xl">
-            &times;
-        </button>
-        <h2 class="text-2xl font-bold text-[#0A0A0A] mb-2">Nous contacter</h2>
-        <p class="text-gray-500 text-sm mb-5">Une question, une suggestion ? Écrivez-nous !</p>
-
-        <form id="contactForm">
-            <div class="mb-4">
-                <label class="form-label">Votre nom (facultatif)</label>
-                <input type="text" id="nom" class="form-input" placeholder="Jean Dupont" />
-            </div>
-            <div class="mb-4">
-                <label class="form-label">Votre email *</label>
-                <input type="email" id="email" class="form-input" placeholder="jean@exemple.com" required />
-            </div>
-            <div class="mb-4">
-                <label class="form-label">Votre message *</label>
-                <textarea id="message" rows="4" class="form-input" placeholder="Votre message..." required></textarea>
-            </div>
-            <div id="contactError" class="hidden text-red-600 text-sm mb-3"></div>
-            <button type="submit" id="contactSubmit" class="btn-orange w-full py-3 rounded-lg font-semibold flex items-center justify-center gap-2">
-                <i class="fas fa-paper-plane"></i> Envoyer
-            </button>
-        </form>
-
-        <div id="contactSuccess" class="hidden mt-4 p-3 bg-green-50 text-green-700 text-sm rounded-lg border border-green-200">
-            ✅ Votre message a été envoyé avec succès.
-        </div>
-    </div>
-</div>
 
     <!-- ==================== SCRIPTS ==================== -->
-
-    <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
-    <!-- Nos scripts -->
     <script type="module" src="/js/api.js"></script>
     <script type="module" src="/js/map.js"></script>
     <script type="module" src="/js/app.js"></script>
 
-    <!-- ==================== SCRIPT CONTACT ==================== -->
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const modal = document.getElementById('contactModal');
-        const openBtn = document.getElementById('contactBtn');
-        const closeBtn = document.getElementById('closeContactModal');
-        const form = document.getElementById('contactForm');
-        const submitBtn = document.getElementById('contactSubmit');
-        const errorDiv = document.getElementById('contactError');
-        const successDiv = document.getElementById('contactSuccess');
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
 
-        // Ouvrir la modale
-        openBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            modal.classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
+
+            // ============================================
+            // CHARGEMENT DES FILTRES
+            // ============================================
+            async function loadFilters() {
+                try {
+                    const resDisc = await fetch('/api/visiteur/disciplines');
+                    if (!resDisc.ok) throw new Error('Erreur disciplines');
+                    const disciplines = await resDisc.json();
+                    const discSelect = document.getElementById('disciplineFilter');
+                    if (discSelect) {
+                        discSelect.innerHTML = '<option value="">Discipline</option>';
+                        disciplines.forEach(d => {
+                            const opt = document.createElement('option');
+                            opt.value = d.id_discipline;
+                            opt.textContent = d.nom;
+                            discSelect.appendChild(opt);
+                        });
+                    }
+
+                    const resCentres = await fetch('/api/visiteur/centres?per_page=100');
+                    if (!resCentres.ok) throw new Error('Erreur centres');
+                    const data = await resCentres.json();
+                    const communes = [...new Set(data.data.map(c => c.commune).filter(Boolean))].sort();
+                    const comSelect = document.getElementById('communeFilter');
+                    if (comSelect) {
+                        comSelect.innerHTML = '<option value="">Commune</option>';
+                        communes.forEach(c => {
+                            const opt = document.createElement('option');
+                            opt.value = c;
+                            opt.textContent = c;
+                            comSelect.appendChild(opt);
+                        });
+                    }
+                } catch (e) {
+                    console.error('Erreur chargement filtres:', e);
+                }
+            }
+
+            loadFilters();
         });
-
-        // Fermer la modale
-        function closeModal() {
-            modal.classList.add('hidden');
-            document.body.style.overflow = '';
-            form.reset();
-            errorDiv.classList.add('hidden');
-            successDiv.classList.add('hidden');
-            submitBtn.disabled = false;
-            submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Envoyer';
-        }
-
-        closeBtn.addEventListener('click', closeModal);
-        modal.addEventListener('click', function(e) {
-            if (e.target === modal) closeModal();
-        });
-
-        
-
-        // Soumission du formulaire
-        form.addEventListener('submit', async function(e) {
-    e.preventDefault();
-
-    const nom = document.getElementById('nom').value.trim();
-    const email = document.getElementById('email').value.trim();
-    const message = document.getElementById('message').value.trim();
-
-    errorDiv.classList.add('hidden');
-    successDiv.classList.add('hidden');
-
-    if (!email || !message) {
-        errorDiv.textContent = 'Veuillez remplir tous les champs obligatoires (*).';
-        errorDiv.classList.remove('hidden');
-        return;
-    }
-
-    if (!email.includes('@')) {
-        errorDiv.textContent = 'Veuillez entrer un email valide.';
-        errorDiv.classList.remove('hidden');
-        return;
-    }
-
-    submitBtn.disabled = true;
-    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Envoi...';
-
-    try {
-    const response = await fetch('/api/visiteur/contact', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-        },
-        body: JSON.stringify({ nom, email, message }),
-    });
-
-    
-
-    const data = await response.json();
-
-    successDiv.textContent = data.message || 'Votre message a été envoyé avec succès.';
-    successDiv.classList.remove('hidden');
-    form.reset();
-
-} catch (error) {
-    // Si l'erreur est due à un HTML renvoyé (problème serveur)
-    // On considère que le message a été envoyé
-    if (error.message.includes('Unexpected token') || error.message.includes('<!DOCTYPE')) {
-        successDiv.textContent = 'Votre message a été envoyé avec succès.';
-        successDiv.classList.remove('hidden');
-        form.reset();
-    } else {
-        errorDiv.textContent = 'Une erreur est survenue. Veuillez réessayer.';
-        errorDiv.classList.remove('hidden');
-    }
-}
-});
-    });
-</script>
+    </script>
+    <script src="/js/menu.js"></script>
 
 </body>
 </html>

@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ajouter un centre — SportMap Bénin</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon.png" />
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0F0A1F;
+            color: #FFFFFF;
+        }
+        .glass {
+            background: rgba(15, 10, 31, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(168, 85, 247, 0.15);
+        }
+        .glass-card {
+            background: rgba(15, 10, 31, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(168, 85, 247, 0.2);
+            border-radius: 24px;
+            padding: 40px;
+            transition: all 0.3s ease;
+        }
+        .glass-card:hover {
+            border-color: rgba(250, 204, 21, 0.3);
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #FACC15, #FBBF24);
+            color: #0F0A1F;
+            font-weight: 700;
+            padding: 14px 32px;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            display: inline-block;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+        }
+        .btn-primary:hover {
+            box-shadow: 0 0 30px rgba(250, 204, 21, 0.3);
+            transform: scale(1.02);
+        }
+        .badge-discipline {
+            background: rgba(168, 85, 247, 0.2);
+            color: #C4B5FD;
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0F0A1F;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #A855F7;
+            border-radius: 8px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #C026D3;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ==================== HEADER AVEC MENU BURGER ==================== -->
+    <header id="mainHeader" class="fixed top-0 left-0 w-full z-50 glass px-4 sm:px-6 py-2 sm:py-3 flex items-center justify-between transition-all duration-300">
+        <a href="/" class="flex items-center gap-3 text-white text-xl font-bold">
+            <img src="/images/logo.png" alt="SportMap Bénin" class="h-10 w-auto" />
+            <span class="hidden sm:inline">SportMap Bénin</span>
+        </a>
+        <nav class="hidden md:flex items-center gap-6 text-sm text-[#C4B5FD]">
+            <a href="/" class="hover:text-[#FACC15] transition">Accueil</a>
+            <a href="#results-section" class="hover:text-[#FACC15] transition">Carte</a>
+            <a href="/ajouter-un-centre.html" class="hover:text-[#FACC15] transition">Ajouter</a>
+            <a href="/a-propos.html" class="hover:text-[#FACC15] transition">À propos</a>
+            <a href="/faq.html" class="hover:text-[#FACC15] transition">FAQ</a>
+            <a href="/contact.html" class="hover:text-[#FACC15] transition">Contact</a>
+        </nav>
+        <div class="flex items-center gap-4">
+            <a href="/ajouter-un-centre.html" class="hidden md:inline-block btn-primary text-sm px-5 py-2">
+                <i class="fas fa-plus mr-1"></i> Ajouter
+            </a>
+            <button id="menuToggle" class="md:hidden text-white text-2xl">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- ==================== MENU LATÉRAL ==================== -->
+    <div id="sideMenu" class="fixed top-0 right-0 h-full w-72 bg-[#0F0A1F] shadow-2xl z-40 transform translate-x-full transition-transform duration-300 ease-in-out pt-20 px-6 border-l border-[#A855F7]/20">
+        <button id="closeMenu" class="absolute top-5 right-5 text-white text-3xl">&times;</button>
+        <nav class="flex flex-col gap-6 text-white text-lg">
+            <a href="/" class="hover:text-[#FACC15] transition border-b border-white/10 pb-3">Accueil</a>
+            <a href="#results-section" class="hover:text-[#FACC15] transition border-b border-white/10 pb-3">Carte</a>
+            <a href="/ajouter-un-centre.html" class="hover:text-[#FACC15] transition border-b border-white/10 pb-3">Ajouter</a>
+            <a href="/a-propos.html" class="hover:text-[#FACC15] transition border-b border-white/10 pb-3">À propos</a>
+            <a href="/faq.html" class="hover:text-[#FACC15] transition border-b border-white/10 pb-3">FAQ</a>
+            <a href="/contact.html" class="hover:text-[#FACC15] transition border-b border-white/10 pb-3">Contact</a>
+        </nav>
+    </div>
+
+    <!-- ==================== OVERLAY ==================== -->
+    <div id="menuOverlay" class="fixed inset-0 bg-black/50 z-30 hidden"></div>
+
+    <!-- ==================== HERO ==================== -->
+    <section class="min-h-[30vh] flex flex-col justify-center items-center text-center px-4 relative pt-24">
+        <div class="absolute inset-0 bg-[#0F0A1F]/70 z-0"></div>
+        <div class="relative z-10 max-w-4xl mx-auto">
+            <h1 class="text-4xl md:text-5xl font-extrabold text-white">Ajouter un centre</h1>
+            <p class="text-[#C4B5FD] text-lg mt-4">Vous connaissez un centre de formation ? Ajoutez-le à l'annuaire.</p>
+        </div>
+    </section>
+
+    <!-- ==================== FORMULAIRE ==================== -->
+    <section class="max-w-3xl mx-auto px-4 py-16">
+        <div class="glass-card">
+            <form id="addCentreForm">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="form-label-wide">Nom du centre *</label>
+                        <input type="text" id="nom" class="form-input-wide" placeholder="Centre de Football de Fidjrossè" required />
+                    </div>
+                    <div>
+                        <label class="form-label-wide">Disciplines *</label>
+                        <div id="disciplinesContainer" class="flex flex-wrap gap-2 border border-[#A855F7]/20 rounded-xl p-3 max-h-40 overflow-y-auto">
+                            <!-- Chargé via JS -->
+                        </div>
+                    </div>
+                    <div>
+                        <label class="form-label-wide">Commune</label>
+                        <input type="text" id="commune" class="form-input-wide" placeholder="Cotonou" />
+                    </div>
+                    <div>
+                        <label class="form-label-wide">Quartier</label>
+                        <input type="text" id="quartier" class="form-input-wide" placeholder="Fidjrossè" />
+                    </div>
+                    <div>
+                        <label class="form-label-wide">Téléphone</label>
+                        <input type="text" id="telephone" class="form-input-wide" placeholder="+229 01 53 66 48 91" />
+                    </div>
+                    <div>
+                        <label class="form-label-wide">WhatsApp</label>
+                        <input type="text" id="whatsapp" class="form-input-wide" placeholder="+229 01 53 66 48 91" />
+                    </div>
+                    <div>
+                        <label class="form-label-wide">Email</label>
+                        <input type="email" id="email" class="form-input-wide" placeholder="azifanmiguel647@gmail.com" />
+                    </div>
+                    <div>
+                        <label class="form-label-wide">Horaires</label>
+                        <input type="text" id="horaires" class="form-input-wide" placeholder="Lun-Sam 08:00-18:00" />
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="form-label-wide">Adresse</label>
+                        <input type="text" id="adresse" class="form-input-wide" placeholder="Fidjrossè, Cotonou" />
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="form-label-wide">Description</label>
+                        <textarea id="description" rows="3" class="form-input-wide" placeholder="Description du centre..."></textarea>
+                    </div>
+                </div>
+
+                <div id="formError" class="hidden mt-4 text-red-400 text-sm"></div>
+                <div id="formSuccess" class="hidden mt-4 text-[#34D399] text-sm"></div>
+
+                <button type="submit" id="submitBtn" class="btn-primary mt-6 flex items-center justify-center gap-2">
+                    <i class="fas fa-paper-plane"></i> Envoyer ma demande
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="border-t border-[#A855F7]/20 py-8 px-4">
+        <div class="max-w-7xl mx-auto text-center text-sm text-[#C4B5FD]">
+            &copy; 2026 SportMap Bénin — Tous droits réservés.
+        </div>
+    </footer>
+
+    <script src="/js/menu.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async function() {
+            const form = document.getElementById('addCentreForm');
+            const submitBtn = document.getElementById('submitBtn');
+            const errorDiv = document.getElementById('formError');
+            const successDiv = document.getElementById('formSuccess');
+
+            try {
+                const res = await fetch('/api/visiteur/disciplines');
+                const disciplines = await res.json();
+                const container = document.getElementById('disciplinesContainer');
+                container.innerHTML = disciplines.map(d => `
+                    <label class="flex items-center gap-2 text-sm cursor-pointer hover:bg-[#A855F7]/10 p-1 rounded">
+                        <input type="checkbox" value="${d.id_discipline}" class="discipline-checkbox" />
+                        <span class="badge-discipline">${d.nom}</span>
+                    </label>
+                `).join('');
+            } catch (e) {
+                console.error('Erreur chargement disciplines', e);
+            }
+
+            form.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                errorDiv.classList.add('hidden');
+                successDiv.classList.add('hidden');
+
+                const nom = document.getElementById('nom').value.trim();
+                const commune = document.getElementById('commune').value.trim();
+                const quartier = document.getElementById('quartier').value.trim();
+                const telephone = document.getElementById('telephone').value.trim();
+                const whatsapp = document.getElementById('whatsapp').value.trim();
+                const email = document.getElementById('email').value.trim();
+                const horaires = document.getElementById('horaires').value.trim();
+                const adresse = document.getElementById('adresse').value.trim();
+                const description = document.getElementById('description').value.trim();
+
+                const disciplines = Array.from(document.querySelectorAll('.discipline-checkbox:checked'))
+                    .map(cb => parseInt(cb.value));
+
+                if (!nom || disciplines.length === 0) {
+                    errorDiv.textContent = 'Veuillez saisir le nom et au moins une discipline.';
+                    errorDiv.classList.remove('hidden');
+                    return;
+                }
+
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Envoi...';
+
+                try {
+                    const response = await fetch('/api/visiteur/centres', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            nom,
+                            description: description || null,
+                            adresse: adresse || null,
+                            commune: commune || null,
+                            quartier: quartier || null,
+                            telephone: telephone || null,
+                            whatsapp: whatsapp || null,
+                            email: email || null,
+                            horaires: horaires || null,
+                            disciplines,
+                        }),
+                    });
+
+                    const data = await response.json();
+
+                    if (!response.ok) {
+                        const errors = data.errors ? Object.values(data.errors).flat().join(' ') : data.message;
+                        throw new Error(errors || 'Erreur lors de l\'envoi.');
+                    }
+
+                    successDiv.textContent = data.message || 'Centre ajouté avec succès. En attente de validation.';
+                    successDiv.classList.remove('hidden');
+                    form.reset();
+                    document.querySelectorAll('.discipline-checkbox').forEach(cb => cb.checked = false);
+
+                } catch (err) {
+                    errorDiv.textContent = err.message || 'Une erreur est survenue.';
+                    errorDiv.classList.remove('hidden');
+                } finally {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Envoyer ma demande';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

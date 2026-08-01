@@ -18,55 +18,103 @@
     <link rel="stylesheet" href="/css/style.css" />
 
     <!-- Favicon -->
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon.png" />
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
-<link rel="apple-touch-icon" sizes="180x180" href="/favicon.png" />
-<link rel="icon" type="image/png" sizes="192x192" href="/favicon.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon.png" />
 
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background: #F9FAFB;
-        }
-
-        .btn-orange {
-            background-color: #FF6B00;
+            background: #0F0A1F;
             color: #FFFFFF;
-            transition: background-color 0.2s ease;
         }
 
-        .btn-orange:hover {
-            background-color: #E05A00;
+        .glass {
+            background: rgba(15, 10, 31, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(168, 85, 247, 0.15);
         }
 
-        .btn-outline-orange {
-            border: 2px solid #FF6B00;
-            color: #FF6B00;
-            background: transparent;
-            transition: all 0.2s ease;
+        .glass-card {
+            background: rgba(15, 10, 31, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(168, 85, 247, 0.2);
+            border-radius: 16px;
+            padding: 20px 24px;
+            transition: all 0.3s ease;
         }
 
-        .btn-outline-orange:hover {
-            background: #FF6B00;
+        .glass-card:hover {
+            border-color: rgba(250, 204, 21, 0.3);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #FACC15, #FBBF24);
+            color: #0F0A1F;
+            font-weight: 700;
+            padding: 12px 28px;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            display: inline-block;
+            border: none;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 0 30px rgba(250, 204, 21, 0.3);
+            transform: scale(1.02);
+        }
+
+        .btn-secondary {
+            background: rgba(168, 85, 247, 0.15);
+            border: 1px solid rgba(168, 85, 247, 0.3);
             color: #FFFFFF;
+            font-weight: 600;
+            padding: 12px 28px;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            display: inline-block;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(168, 85, 247, 0.3);
+            border-color: #A855F7;
         }
 
         .btn-danger {
-            background-color: #EF4444;
+            background: #EF4444;
             color: #FFFFFF;
-            transition: background-color 0.2s ease;
+            font-weight: 600;
+            padding: 8px 16px;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            display: inline-block;
+            border: none;
+            cursor: pointer;
+            font-size: 13px;
         }
 
         .btn-danger:hover {
-            background-color: #DC2626;
+            background: #DC2626;
         }
 
         .stats-card {
-            background: #FFFFFF;
-            border-radius: 12px;
+            background: rgba(15, 10, 31, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(168, 85, 247, 0.2);
+            border-radius: 16px;
             padding: 20px 24px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-            border: 1px solid #E5E7EB;
+            transition: all 0.3s ease;
+        }
+
+        .stats-card:hover {
+            border-color: rgba(250, 204, 21, 0.3);
         }
 
         .table-admin {
@@ -76,27 +124,28 @@
         }
 
         .table-admin th {
-            background: #F9FAFB;
+            background: rgba(168, 85, 247, 0.05);
             text-align: left;
             padding: 12px 16px;
             font-weight: 600;
-            color: #0A0A0A;
-            border-bottom: 2px solid #E5E7EB;
+            color: #C4B5FD;
+            border-bottom: 1px solid rgba(168, 85, 247, 0.2);
         }
 
         .table-admin td {
             padding: 12px 16px;
-            border-bottom: 1px solid #E5E7EB;
+            border-bottom: 1px solid rgba(168, 85, 247, 0.1);
             vertical-align: middle;
+            color: #E5E7EB;
         }
 
         .table-admin tr:hover {
-            background: #F9FAFB;
+            background: rgba(168, 85, 247, 0.05);
         }
 
         .badge-publie {
-            background: #10B981;
-            color: #FFFFFF;
+            background: #34D399;
+            color: #0F0A1F;
             padding: 4px 12px;
             border-radius: 20px;
             font-size: 12px;
@@ -106,12 +155,62 @@
 
         .badge-brouillon {
             background: #F59E0B;
-            color: #FFFFFF;
+            color: #0F0A1F;
             padding: 4px 12px;
             border-radius: 20px;
             font-size: 12px;
             font-weight: 600;
             display: inline-block;
+        }
+
+        .badge-attente {
+            background: #FF6B6B;
+            color: #0F0A1F;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        input,
+        select,
+        textarea {
+            background: rgba(15, 10, 31, 0.6);
+            border: 1px solid rgba(168, 85, 247, 0.2);
+            color: #FFFFFF;
+            border-radius: 12px;
+            padding: 12px 16px;
+            transition: all 0.3s ease;
+            width: 100%;
+            font-size: 14px;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #A855F7;
+            box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.15);
+        }
+
+        input::placeholder,
+        textarea::placeholder {
+            color: #A5B4FC;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            font-size: 14px;
+            color: #C4B5FD;
+            margin-bottom: 4px;
+        }
+
+        .form-checkbox {
+            width: 18px;
+            height: 18px;
+            accent-color: #A855F7;
         }
 
         .modal {
@@ -120,92 +219,109 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.7);
             display: none;
             align-items: center;
             justify-content: center;
             z-index: 999;
-        }
-
-        .modal-content {
-            background: #FFFFFF;
-            border-radius: 16px;
-            padding: 30px;
-            max-width: 500px;
-            width: 100%;
-            margin: 20px;
-            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(4px);
         }
 
         .modal.active {
             display: flex;
         }
+
+        .modal-content {
+            background: rgba(15, 10, 31, 0.95);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(168, 85, 247, 0.2);
+            border-radius: 24px;
+            padding: 30px;
+            max-width: 700px;
+            width: 100%;
+            margin: 20px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0F0A1F;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #A855F7;
+            border-radius: 8px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #C026D3;
+        }
     </style>
 </head>
 <body>
 
-    <!-- HEADER -->
-    <header class="bg-[#0A0A0A] py-4 px-6 shadow-lg">
-        <div class="max-w-7xl mx-auto flex items-center justify-between">
-            <a href="/" class="text-white text-2xl font-extrabold tracking-tight">
-                SportMap Bénin
-            </a>
-            <div class="flex items-center gap-4">
-                <span class="text-white text-sm hidden sm:inline">
-                    <i class="fas fa-user text-[#FF6B00] mr-1"></i>
-                    <span id="adminName">Administrateur</span>
-                </span>
-                <button id="logoutBtn" class="text-white border border-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-white hover:text-[#0A0A0A] transition">
-                    <i class="fas fa-sign-out-alt mr-1"></i> Déconnexion
-                </button>
-            </div>
+    <!-- ==================== HEADER ==================== -->
+    <header class="glass px-6 py-3 flex items-center justify-between fixed top-0 left-0 w-full z-50">
+        <a href="/" class="flex items-center gap-3 text-white text-xl font-bold">
+            <img src="/images/logo.png" alt="SportMap Bénin" class="h-10 w-auto" />
+            <span class="hidden sm:inline">SportMap Bénin</span>
+        </a>
+        <div class="flex items-center gap-4">
+            <span class="text-[#C4B5FD] text-sm hidden sm:inline">
+                <i class="fas fa-user text-[#FACC15] mr-1"></i>
+                <span id="adminName">Administrateur</span>
+            </span>
+            <button id="logoutBtn" class="btn-secondary text-sm px-4 py-1">Déconnexion</button>
         </div>
     </header>
 
-    <!-- MAIN -->
-    <main class="max-w-7xl mx-auto px-4 py-8">
+    <!-- ==================== MAIN ==================== -->
+    <main class="max-w-7xl mx-auto px-4 pt-24 pb-10">
 
         <!-- STATS -->
         <div id="statsContainer" class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
             <div class="stats-card">
-                <p class="text-sm text-gray-500">Total</p>
-                <p id="statTotal" class="text-2xl font-bold text-[#0A0A0A]">0</p>
+                <p class="text-[#C4B5FD] text-sm">Total</p>
+                <p id="statTotal" class="text-2xl font-bold text-white">0</p>
             </div>
             <div class="stats-card">
-                <p class="text-sm text-gray-500">Publiés</p>
-                <p id="statPublie" class="text-2xl font-bold text-[#10B981]">0</p>
+                <p class="text-[#C4B5FD] text-sm">Publiés</p>
+                <p id="statPublie" class="text-2xl font-bold text-[#34D399]">0</p>
             </div>
             <div class="stats-card">
-                <p class="text-sm text-gray-500">Brouillons</p>
-                <p id="statBrouillon" class="text-2xl font-bold text-[#F59E0B]">0</p>
+                <p class="text-[#C4B5FD] text-sm">En attente</p>
+                <p id="statAttente" class="text-2xl font-bold text-[#FF6B6B]">0</p>
             </div>
             <div class="stats-card">
-                <p class="text-sm text-gray-500">Disciplines</p>
-                <p id="statDisciplines" class="text-2xl font-bold text-[#FF6B00]">0</p>
+                <p class="text-[#C4B5FD] text-sm">Disciplines</p>
+                <p id="statDisciplines" class="text-2xl font-bold text-[#FACC15]">0</p>
             </div>
         </div>
 
         <!-- ACTIONS -->
         <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
-    <button id="openCreateModalBtn" class="btn-orange px-6 py-3 rounded-lg font-semibold flex items-center gap-2">
-        <i class="fas fa-plus-circle"></i> Ajouter un centre
-    </button>
-    <div class="flex gap-2">
-        <button id="showMessagesBtn" class="btn-outline-orange px-4 py-2 rounded-lg font-medium text-sm relative">
-            <i class="fas fa-envelope mr-1"></i> Messages
-            <span id="unreadBadge" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full px-2 py-0.5 hidden">0</span>
-        </button>
-        <button id="manageDisciplinesBtn" class="btn-outline-orange px-4 py-2 rounded-lg font-medium text-sm">
-            <i class="fas fa-tags mr-1"></i> Disciplines
-        </button>
-    </div>
-</div>
-
-            
+            <button id="openCreateModalBtn" class="btn-primary flex items-center gap-2">
+                <i class="fas fa-plus-circle"></i> Ajouter un centre
+            </button>
+            <div class="flex flex-wrap gap-2">
+                <button id="showEnAttenteBtn" class="btn-secondary relative">
+                    <i class="fas fa-clock mr-1"></i> En attente
+                    <span id="enAttenteBadge" class="absolute -top-2 -right-2 bg-[#FF6B6B] text-[#0F0A1F] text-xs rounded-full px-2 py-0.5 hidden">0</span>
+                </button>
+                <button id="showMessagesBtn" class="btn-secondary relative">
+                    <i class="fas fa-envelope mr-1"></i> Messages
+                    <span id="unreadBadge" class="absolute -top-2 -right-2 bg-[#FACC15] text-[#0F0A1F] text-xs rounded-full px-2 py-0.5 hidden">0</span>
+                </button>
+                <button id="manageDisciplinesBtn" class="btn-secondary">
+                    <i class="fas fa-tags mr-1"></i> Disciplines
+                </button>
+            </div>
         </div>
 
         <!-- TABLEAU DES CENTRES -->
-        <div class="bg-white rounded-xl shadow overflow-hidden">
+        <div id="centresSection" class="glass-card overflow-hidden">
             <div class="overflow-x-auto">
                 <table class="table-admin">
                     <thead>
@@ -219,54 +335,77 @@
                     </thead>
                     <tbody id="centresTableBody">
                         <tr>
-                            <td colspan="5" class="text-center py-8 text-gray-500">
+                            <td colspan="5" class="text-center py-8 text-[#C4B5FD]">
                                 <i class="fas fa-spinner fa-spin mr-2"></i> Chargement...
                             </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-            <!-- Pagination -->
-            <div id="adminPagination" class="flex justify-center items-center gap-3 py-4 border-t border-gray-200">
+            <div id="adminPagination" class="flex justify-center items-center gap-3 py-4 border-t border-[#A855F7]/20"></div>
+        </div>
+
+        <!-- SECTION EN ATTENTE -->
+        <div id="enAttenteSection" class="glass-card overflow-hidden mt-6 hidden">
+            <h2 class="text-xl font-bold text-white mb-4">
+                <i class="fas fa-clock text-[#FF6B6B] mr-2"></i> Centres en attente de validation
+            </h2>
+            <div class="overflow-x-auto">
+                <table class="table-admin">
+                    <thead>
+                        <tr>
+                            <th>Nom</th>
+                            <th>Commune</th>
+                            <th>Disciplines</th>
+                            <th>Date de soumission</th>
+                            <th class="text-right">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="enAttenteTableBody">
+                        <tr>
+                            <td colspan="5" class="text-center py-8 text-[#C4B5FD]">
+                                <i class="fas fa-spinner fa-spin mr-2"></i> Chargement...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- SECTION MESSAGES -->
+        <div id="messagesSection" class="glass-card overflow-hidden mt-6 hidden">
+            <h2 class="text-xl font-bold text-white mb-4">
+                <i class="fas fa-envelope text-[#FACC15] mr-2"></i> Messages des visiteurs
+            </h2>
+            <div class="overflow-x-auto">
+                <table class="table-admin">
+                    <thead>
+                        <tr>
+                            <th>Nom</th>
+                            <th>Email</th>
+                            <th>Message</th>
+                            <th>Statut</th>
+                            <th>Date</th>
+                            <th class="text-right">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="messagesTableBody">
+                        <tr>
+                            <td colspan="6" class="text-center py-8 text-[#C4B5FD]">
+                                <i class="fas fa-spinner fa-spin mr-2"></i> Chargement...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </main>
 
-    <!-- SECTION MESSAGES -->
-<div id="messagesSection" class="hidden mt-8">
-    <h2 class="text-xl font-bold text-[#0A0A0A] mb-4">
-        <i class="fas fa-envelope text-[#FF6B00] mr-2"></i> Messages des visiteurs
-    </h2>
-    <div class="bg-white rounded-xl shadow overflow-hidden">
-        <div class="overflow-x-auto">
-            <table class="table-admin">
-                <thead>
-                    <tr>
-                        <th>Nom</th>
-                        <th>Email</th>
-                        <th>Message</th>
-                        <th>Statut</th>
-                        <th>Date</th>
-                        <th class="text-right">Actions</th>
-                    </tr>
-                </thead>
-                <tbody id="messagesTableBody">
-                    <tr>
-                        <td colspan="6" class="text-center py-8 text-gray-500">
-                            <i class="fas fa-spinner fa-spin mr-2"></i> Chargement...
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
-
-    <!-- MODALE AJOUT/MODIFICATION -->
+    <!-- ==================== MODALE AJOUT/MODIFICATION ==================== -->
     <div id="centreModal" class="modal">
-        <div class="modal-content max-w-2xl max-h-[90vh] overflow-y-auto">
-            <h2 id="modalTitle" class="text-2xl font-bold text-[#0A0A0A] mb-4">
-                <i class="fas fa-plus-circle text-[#FF6B00] mr-2"></i> Ajouter un centre
+        <div class="modal-content">
+            <h2 id="modalTitle" class="text-2xl font-bold text-white mb-4">
+                <i class="fas fa-plus-circle text-[#FACC15] mr-2"></i> Ajouter un centre
             </h2>
 
             <form id="centreForm">
@@ -275,17 +414,14 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <!-- Colonne gauche -->
                     <div>
-
                         <div class="mb-3">
-    <label class="form-label">Logo du centre</label>
-    <input type="file" id="formLogo" class="form-input" accept="image/*" />
-</div>
-
-<div class="mb-3">
-    <label class="form-label">Photos du centre</label>
-    <input type="file" id="formPhotos" class="form-input" accept="image/*" multiple />
-</div>
-
+                            <label class="form-label">Logo du centre</label>
+                            <input type="file" id="formLogo" class="form-input" accept="image/*" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Photos du centre</label>
+                            <input type="file" id="formPhotos" class="form-input" accept="image/*" multiple />
+                        </div>
                         <div class="mb-3">
                             <label class="form-label">Nom du centre *</label>
                             <input type="text" id="formNom" class="form-input" required />
@@ -338,21 +474,21 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Disciplines</label>
-                            <div id="formDisciplines" class="space-y-1 max-h-32 overflow-y-auto border border-gray-200 rounded-lg p-2">
+                            <div id="formDisciplines" class="space-y-1 max-h-32 overflow-y-auto border border-[#A855F7]/20 rounded-lg p-2">
                                 <!-- Checkbox générées par JS -->
                             </div>
-                             <button type="button" id="addDisciplineInlineBtn" class="mt-2 text-[#FF6B00] text-sm font-medium hover:underline flex items-center gap-1">
-        <i class="fas fa-plus-circle"></i> Nouvelle discipline
-    </button>
+                            <button type="button" id="addDisciplineInlineBtn" class="mt-2 text-[#FACC15] text-sm font-medium hover:underline flex items-center gap-1">
+                                <i class="fas fa-plus-circle"></i> Nouvelle discipline
+                            </button>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Statut</label>
                             <div class="flex gap-4 mt-1">
-                                <label class="flex items-center gap-2 text-sm">
+                                <label class="flex items-center gap-2 text-sm text-[#C4B5FD]">
                                     <input type="radio" name="statut" value="brouillon" checked class="form-checkbox" />
                                     Brouillon
                                 </label>
-                                <label class="flex items-center gap-2 text-sm">
+                                <label class="flex items-center gap-2 text-sm text-[#C4B5FD]">
                                     <input type="radio" name="statut" value="publie" class="form-checkbox" />
                                     Publié
                                 </label>
@@ -361,27 +497,24 @@
                     </div>
                 </div>
 
-                <div class="flex gap-3 mt-6 pt-4 border-t border-gray-200">
-                    <button type="submit" class="btn-orange px-6 py-2.5 rounded-lg font-semibold flex-1 flex items-center justify-center gap-2">
+                <div class="flex gap-3 mt-6 pt-4 border-t border-[#A855F7]/20">
+                    <button type="submit" class="btn-primary flex-1 flex items-center justify-center gap-2">
                         <i class="fas fa-save"></i> Enregistrer
                     </button>
-                    <button type="button" id="closeModalBtn" class="px-6 py-2.5 border border-gray-300 rounded-lg font-medium hover:bg-gray-50 transition">
-                        Annuler
-                    </button>
+                    <button type="button" id="closeModalBtn" class="btn-secondary">Annuler</button>
                 </div>
             </form>
         </div>
-        
     </div>
 
-    <!-- FOOTER -->
-    <footer class="bg-[#0A0A0A] text-white py-4 px-4 mt-8">
-        <div class="max-w-7xl mx-auto text-center text-sm">
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="border-t border-[#A855F7]/20 py-4 px-4 mt-8">
+        <div class="max-w-7xl mx-auto text-center text-sm text-[#C4B5FD]">
             &copy; 2026 SportMap Bénin — Administrateur
         </div>
     </footer>
 
-    <!-- SCRIPTS -->
+    <!-- ==================== SCRIPTS ==================== -->
     <script type="module">
         import {
             getAdminCentres,
@@ -408,6 +541,9 @@
         let perPage = 10;
         let centresData = [];
         let disciplinesData = [];
+        let messagesData = [];
+        let enAttenteData = [];
+
         const communesBenin = [
             'Abomey', 'Abomey-Calavi', 'Adjarra', 'Adja-Ouèrè', 'Aglangandan',
             'Aguégués', 'Akpro-Missérété', 'Allada', 'Alibori', 'Aplahoué',
@@ -433,7 +569,7 @@
         const paginationContainer = document.getElementById('adminPagination');
         const statsTotal = document.getElementById('statTotal');
         const statsPublie = document.getElementById('statPublie');
-        const statsBrouillon = document.getElementById('statBrouillon');
+        const statsAttente = document.getElementById('statAttente');
         const statsDisciplines = document.getElementById('statDisciplines');
 
         const modal = document.getElementById('centreModal');
@@ -452,7 +588,8 @@
         const formLatitude = document.getElementById('formLatitude');
         const formLongitude = document.getElementById('formLongitude');
         const formDisciplines = document.getElementById('formDisciplines');
-        const formStatut = document.querySelectorAll('input[name="statut"]');
+        const formLogo = document.getElementById('formLogo');
+        const formPhotos = document.getElementById('formPhotos');
 
         // ============================================
         // CHARGEMENT INITIAL
@@ -462,6 +599,8 @@
             try {
                 await loadDisciplines();
                 await loadCentres();
+                await loadEnAttente();
+                await loadMessages();
             } catch (error) {
                 console.error('Erreur initiale:', error);
             }
@@ -476,47 +615,44 @@
                 const response = await getAdminDisciplines(token, { per_page: 100 });
                 disciplinesData = response.data || [];
                 statsDisciplines.textContent = disciplinesData.length;
-
-                // Remplir les checkbox du formulaire
                 renderDisciplineCheckboxes();
-
             } catch (error) {
                 console.error('Erreur chargement disciplines:', error);
             }
         }
 
-        // ============================================
-// AJOUT RAPIDE D'UNE DISCIPLINE
-// ============================================
-
-document.getElementById('addDisciplineInlineBtn').addEventListener('click', async () => {
-    const nom = prompt('Entrez le nom de la nouvelle discipline :');
-    if (!nom || !nom.trim()) return;
-
-    try {
-        await createDiscipline(token, { nom: nom.trim() });
-        alert('Discipline créée avec succès.');
-        await loadDisciplines(); // Recharge la liste
-    } catch (error) {
-        alert(error.message || 'Erreur lors de la création.');
-    }
-});
-
         function renderDisciplineCheckboxes(selectedIds = []) {
             if (!disciplinesData || disciplinesData.length === 0) {
-                formDisciplines.innerHTML = '<p class="text-gray-400 text-sm">Aucune discipline disponible</p>';
+                formDisciplines.innerHTML = '<p class="text-[#C4B5FD] text-sm">Aucune discipline disponible</p>';
                 return;
             }
 
             formDisciplines.innerHTML = disciplinesData.map(d => `
-                <label class="flex items-center gap-2 text-sm cursor-pointer hover:bg-gray-50 p-1 rounded">
+                <label class="flex items-center gap-2 text-sm cursor-pointer hover:bg-[#A855F7]/10 p-1 rounded">
                     <input type="checkbox" value="${d.id_discipline}" 
                            class="form-checkbox" 
                            ${selectedIds.includes(d.id_discipline) ? 'checked' : ''} />
-                    ${d.nom}
+                    <span class="text-[#C4B5FD]">${d.nom}</span>
                 </label>
             `).join('');
         }
+
+        // ============================================
+        // AJOUT RAPIDE D'UNE DISCIPLINE
+        // ============================================
+
+        document.getElementById('addDisciplineInlineBtn').addEventListener('click', async () => {
+            const nom = prompt('Entrez le nom de la nouvelle discipline :');
+            if (!nom || !nom.trim()) return;
+
+            try {
+                await createDiscipline(token, { nom: nom.trim() });
+                alert('Discipline créée avec succès.');
+                await loadDisciplines();
+            } catch (error) {
+                alert(error.message || 'Erreur lors de la création.');
+            }
+        });
 
         // ============================================
         // CHARGEMENT DES COMMUNES
@@ -555,7 +691,7 @@ document.getElementById('addDisciplineInlineBtn').addEventListener('click', asyn
                 console.error('Erreur chargement centres:', error);
                 tbody.innerHTML = `
                     <tr>
-                        <td colspan="5" class="text-center py-8 text-red-600">
+                        <td colspan="5" class="text-center py-8 text-red-400">
                             <i class="fas fa-exclamation-circle mr-2"></i>
                             Erreur lors du chargement des centres.
                         </td>
@@ -564,177 +700,11 @@ document.getElementById('addDisciplineInlineBtn').addEventListener('click', asyn
             }
         }
 
-        // ============================================
-// GESTION DES MESSAGES
-// ============================================
-
-let messagesData = [];
-
-async function loadMessages() {
-    try {
-        const response = await fetch('/api/admin/contacts', {
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json',
-            },
-        });
-
-        if (!response.ok) throw new Error('Erreur de chargement');
-
-        messagesData = await response.json();
-        renderMessages(messagesData);
-        updateUnreadBadge(messagesData);
-
-    } catch (error) {
-        console.error(error);
-        document.getElementById('messagesTableBody').innerHTML = `
-            <tr>
-                <td colspan="6" class="text-center py-8 text-red-600">
-                    <i class="fas fa-exclamation-circle mr-2"></i>
-                    Erreur lors du chargement des messages.
-                </td>
-            </tr>
-        `;
-    }
-}
-
-function renderMessages(messages) {
-    const tbody = document.getElementById('messagesTableBody');
-
-    if (!messages || messages.length === 0) {
-        tbody.innerHTML = `
-            <tr>
-                <td colspan="6" class="text-center py-8 text-gray-500">
-                    <i class="fas fa-inbox mr-2"></i>
-                    Aucun message reçu.
-                </td>
-            </tr>
-        `;
-        return
-    }
-
-    tbody.innerHTML = messages.map(msg => `
-        <tr class="${!msg.lu ? 'bg-orange-50' : ''}">
-            <td class="font-medium">${msg.nom || 'Anonyme'}</td>
-            <td class="text-gray-600">${msg.email}</td>
-            <td class="text-gray-600 max-w-xs truncate" title="${msg.message}">${msg.message}</td>
-            <td>
-                <span class="${msg.lu ? 'badge-publie' : 'badge-brouillon'}">
-                    ${msg.lu ? 'Lu' : 'Non lu'}
-                </span>
-            </td>
-            <td class="text-gray-500 text-sm">${new Date(msg.created_at).toLocaleDateString('fr-FR')}</td>
-            <td class="text-right">
-                <div class="flex items-center justify-end gap-2">
-                    ${!msg.lu ? `
-                        <button class="btn-mark-read text-[#10B981] hover:text-[#059669] transition text-sm"
-                                data-id="${msg.id}"
-                                title="Marquer comme lu">
-                            <i class="fas fa-check-circle"></i>
-                        </button>
-                    ` : ''}
-                    <button class="btn-delete-message text-gray-500 hover:text-red-600 transition text-sm"
-                            data-id="${msg.id}"
-                            title="Supprimer">
-                        <i class="fas fa-trash"></i>
-                    </button>
-                </div>
-            </td>
-        </tr>
-    `).join('');
-
-    // Événements
-    document.querySelectorAll('.btn-mark-read').forEach(btn => {
-        btn.addEventListener('click', () => handleMarkAsRead(parseInt(btn.dataset.id)));
-    });
-
-    document.querySelectorAll('.btn-delete-message').forEach(btn => {
-        btn.addEventListener('click', () => handleDeleteMessage(parseInt(btn.dataset.id)));
-    });
-}
-
-function updateUnreadBadge(messages) {
-    const badge = document.getElementById('unreadBadge');
-    const unreadCount = messages.filter(m => !m.lu).length;
-
-    if (unreadCount > 0) {
-        badge.textContent = unreadCount;
-        badge.classList.remove('hidden');
-    } else {
-        badge.classList.add('hidden');
-    }
-}
-
-async function handleMarkAsRead(id) {
-    try {
-        const response = await fetch(`/api/admin/contacts/${id}/read`, {
-            method: 'PUT',
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json',
-            },
-        });
-
-        if (!response.ok) throw new Error('Erreur');
-
-        await loadMessages();
-
-    } catch (error) {
-        alert('Erreur lors du marquage.');
-    }
-}
-
-async function handleDeleteMessage(id) {
-    if (!confirm('Supprimer définitivement ce message ?')) return;
-
-    try {
-        const response = await fetch(`/api/admin/contacts/${id}`, {
-            method: 'DELETE',
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json',
-            },
-        });
-
-        if (!response.ok) throw new Error('Erreur');
-
-        await loadMessages();
-
-    } catch (error) {
-        alert('Erreur lors de la suppression.');
-    }
-}
-
-// ============================================
-// BASCULE CENTRES / MESSAGES
-// ============================================
-
-document.getElementById('showMessagesBtn').addEventListener('click', function() {
-    const messagesSection = document.getElementById('messagesSection');
-    const centresContainer = document.querySelector('.bg-white.rounded-xl.shadow.overflow-hidden:not(#messagesSection)');
-    const centresParent = centresContainer?.parentNode;
-
-    if (messagesSection.classList.contains('hidden')) {
-        // Afficher les messages, cacher les centres
-        messagesSection.classList.remove('hidden');
-        if (centresContainer) centresContainer.style.display = 'none';
-        this.classList.add('bg-[#FF6B00]', 'text-white');
-        this.classList.remove('btn-outline-orange');
-        loadMessages();
-    } else {
-        // Afficher les centres, cacher les messages
-        messagesSection.classList.add('hidden');
-        if (centresContainer) centresContainer.style.display = '';
-        this.classList.remove('bg-[#FF6B00]', 'text-white');
-        this.classList.add('btn-outline-orange');
-    }
-});
-
         function renderTable(centres) {
             if (!centres || centres.length === 0) {
                 tbody.innerHTML = `
                     <tr>
-                        <td colspan="5" class="text-center py-8 text-gray-500">
+                        <td colspan="5" class="text-center py-8 text-[#C4B5FD]">
                             <i class="fas fa-inbox mr-2"></i>
                             Aucun centre trouvé.
                         </td>
@@ -745,35 +715,35 @@ document.getElementById('showMessagesBtn').addEventListener('click', function() 
 
             tbody.innerHTML = centres.map(centre => `
                 <tr>
-                    <td class="font-medium text-[#0A0A0A]">${centre.nom}</td>
-                    <td class="text-gray-600">${centre.quartier || '-'}</td>
-                    <td class="text-gray-600">${centre.commune || '-'}</td>
+                    <td class="font-medium text-white">${centre.nom}</td>
+                    <td class="text-[#C4B5FD]">${centre.quartier || '-'}</td>
+                    <td class="text-[#C4B5FD]">${centre.commune || '-'}</td>
                     <td>
-                        <span class="${centre.statut === 'publie' ? 'badge-publie' : 'badge-brouillon'}">
-                            ${centre.statut === 'publie' ? 'Publié' : 'Brouillon'}
+                        <span class="${centre.statut === 'publie' ? 'badge-publie' : centre.statut_validation === 'en_attente' ? 'badge-attente' : 'badge-brouillon'}">
+                            ${centre.statut === 'publie' ? 'Publié' : centre.statut_validation === 'en_attente' ? 'En attente' : 'Brouillon'}
                         </span>
                     </td>
                     <td class="text-right">
                         <div class="flex items-center justify-end gap-2 flex-wrap">
-                            <button class="btn-edit text-[#FF6B00] hover:text-[#E05A00] transition text-sm"
+                            <button class="btn-edit text-[#FACC15] hover:text-[#FBBF24] transition text-sm"
                                     data-id="${centre.id_centre}"
                                     title="Modifier">
                                 <i class="fas fa-edit"></i>
                             </button>
                             ${centre.statut === 'publie' ? `
-                                <button class="btn-depublier text-gray-500 hover:text-[#F59E0B] transition text-sm"
+                                <button class="btn-depublier text-[#C4B5FD] hover:text-[#F59E0B] transition text-sm"
                                         data-id="${centre.id_centre}"
                                         title="Dépublier">
                                     <i class="fas fa-eye-slash"></i>
                                 </button>
                             ` : `
-                                <button class="btn-publier text-gray-500 hover:text-[#10B981] transition text-sm"
+                                <button class="btn-publier text-[#C4B5FD] hover:text-[#34D399] transition text-sm"
                                         data-id="${centre.id_centre}"
                                         title="Publier">
                                     <i class="fas fa-eye"></i>
                                 </button>
                             `}
-                            <button class="btn-delete text-gray-500 hover:text-red-600 transition text-sm"
+                            <button class="btn-delete text-[#C4B5FD] hover:text-red-400 transition text-sm"
                                     data-id="${centre.id_centre}"
                                     title="Supprimer">
                                 <i class="fas fa-trash"></i>
@@ -783,7 +753,6 @@ document.getElementById('showMessagesBtn').addEventListener('click', function() 
                 </tr>
             `).join('');
 
-            // Écouter les événements des boutons
             document.querySelectorAll('.btn-edit').forEach(btn => {
                 btn.addEventListener('click', () => openEditModal(parseInt(btn.dataset.id)));
             });
@@ -814,31 +783,31 @@ document.getElementById('showMessagesBtn').addEventListener('click', function() 
             let html = '';
 
             if (response.prev_page_url) {
-                html += `<button class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition" data-page="${response.current_page - 1}">
+                html += `<button class="btn-secondary text-sm px-3 py-1" data-page="${response.current_page - 1}">
                             <i class="fas fa-chevron-left"></i>
                          </button>`;
             } else {
-                html += `<button class="px-4 py-2 border border-gray-300 rounded-lg text-gray-400 cursor-not-allowed" disabled>
+                html += `<button class="btn-secondary text-sm px-3 py-1 opacity-50 cursor-not-allowed" disabled>
                             <i class="fas fa-chevron-left"></i>
                          </button>`;
             }
 
             for (let i = 1; i <= response.last_page; i++) {
                 if (i === response.current_page) {
-                    html += `<button class="px-4 py-2 bg-[#FF6B00] text-white rounded-lg font-medium" data-page="${i}">${i}</button>`;
+                    html += `<button class="btn-primary text-sm px-3 py-1" data-page="${i}">${i}</button>`;
                 } else if (i === 1 || i === response.last_page || Math.abs(i - response.current_page) <= 2) {
-                    html += `<button class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition" data-page="${i}">${i}</button>`;
+                    html += `<button class="btn-secondary text-sm px-3 py-1" data-page="${i}">${i}</button>`;
                 } else if (i === response.current_page - 3 || i === response.current_page + 3) {
-                    html += `<span class="px-2 text-gray-400">...</span>`;
+                    html += `<span class="px-2 text-[#C4B5FD]">...</span>`;
                 }
             }
 
             if (response.next_page_url) {
-                html += `<button class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition" data-page="${response.current_page + 1}">
+                html += `<button class="btn-secondary text-sm px-3 py-1" data-page="${response.current_page + 1}">
                             <i class="fas fa-chevron-right"></i>
                          </button>`;
             } else {
-                html += `<button class="px-4 py-2 border border-gray-300 rounded-lg text-gray-400 cursor-not-allowed" disabled>
+                html += `<button class="btn-secondary text-sm px-3 py-1 opacity-50 cursor-not-allowed" disabled>
                             <i class="fas fa-chevron-right"></i>
                          </button>`;
             }
@@ -864,31 +833,26 @@ document.getElementById('showMessagesBtn').addEventListener('click', function() 
         function updateStats(centres) {
             const total = centres.length;
             const publie = centres.filter(c => c.statut === 'publie').length;
-            const brouillon = centres.filter(c => c.statut === 'brouillon').length;
+            const attente = centres.filter(c => c.statut_validation === 'en_attente').length;
 
             statsTotal.textContent = total;
             statsPublie.textContent = publie;
-            statsBrouillon.textContent = brouillon;
+            statsAttente.textContent = attente;
         }
 
         // ============================================
         // GESTION DU FORMULAIRE (MODALE)
         // ============================================
 
-        document.getElementById('openCreateModalBtn').addEventListener('click', () => {
-            openCreateModal();
-        });
-
-        document.getElementById('closeModalBtn').addEventListener('click', () => {
-            closeModal();
-        });
+        document.getElementById('openCreateModalBtn').addEventListener('click', openCreateModal);
+        document.getElementById('closeModalBtn').addEventListener('click', closeModal);
 
         modal.addEventListener('click', (e) => {
             if (e.target === modal) closeModal();
         });
 
         function openCreateModal() {
-            modalTitle.innerHTML = '<i class="fas fa-plus-circle text-[#FF6B00] mr-2"></i> Ajouter un centre';
+            modalTitle.innerHTML = '<i class="fas fa-plus-circle text-[#FACC15] mr-2"></i> Ajouter un centre';
             form.reset();
             editIdInput.value = '';
             formCommune.value = '';
@@ -902,7 +866,7 @@ document.getElementById('showMessagesBtn').addEventListener('click', function() 
             const centre = centresData.find(c => c.id_centre === id);
             if (!centre) return;
 
-            modalTitle.innerHTML = '<i class="fas fa-edit text-[#FF6B00] mr-2"></i> Modifier le centre';
+            modalTitle.innerHTML = '<i class="fas fa-edit text-[#FACC15] mr-2"></i> Modifier le centre';
             editIdInput.value = centre.id_centre;
             formNom.value = centre.nom || '';
             formDescription.value = centre.description || '';
@@ -932,80 +896,72 @@ document.getElementById('showMessagesBtn').addEventListener('click', function() 
         // SOUMISSION DU FORMULAIRE
         // ============================================
 
-       form.addEventListener('submit', async (e) => {
-    e.preventDefault();
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
 
-    const isEdit = editIdInput.value !== '';
+            const isEdit = editIdInput.value !== '';
 
-    const formData = new FormData();
+            const formData = new FormData();
 
-    // Ajouter les champs texte
-    formData.append('nom', formNom.value.trim());
-    formData.append('description', formDescription.value.trim() || '');
-    formData.append('adresse', formAdresse.value.trim() || '');
-    formData.append('telephone', formTelephone.value.trim() || '');
-    formData.append('whatsapp', formWhatsapp.value.trim() || '');
-    formData.append('email', formEmail.value.trim() || '');
-    formData.append('horaires', formHoraires.value.trim() || '');
-    formData.append('commune', formCommune.value || '');
-    formData.append('quartier', formQuartier.value.trim() || '');
-    formData.append('latitude', formLatitude.value || '');
-    formData.append('longitude', formLongitude.value || '');
-    formData.append('statut', document.querySelector('input[name="statut"]:checked').value);
+            formData.append('nom', formNom.value.trim());
+            formData.append('description', formDescription.value.trim() || '');
+            formData.append('adresse', formAdresse.value.trim() || '');
+            formData.append('telephone', formTelephone.value.trim() || '');
+            formData.append('whatsapp', formWhatsapp.value.trim() || '');
+            formData.append('email', formEmail.value.trim() || '');
+            formData.append('horaires', formHoraires.value.trim() || '');
+            formData.append('commune', formCommune.value || '');
+            formData.append('quartier', formQuartier.value.trim() || '');
+            formData.append('latitude', formLatitude.value || '');
+            formData.append('longitude', formLongitude.value || '');
+            formData.append('statut', document.querySelector('input[name="statut"]:checked').value);
 
-    // Ajouter les disciplines (tableau)
-    const disciplines = Array.from(formDisciplines.querySelectorAll('input[type="checkbox"]:checked'))
-        .map(cb => parseInt(cb.value));
-    disciplines.forEach(id => formData.append('disciplines[]', id));
+            const disciplines = Array.from(formDisciplines.querySelectorAll('input[type="checkbox"]:checked'))
+                .map(cb => parseInt(cb.value));
+            disciplines.forEach(id => formData.append('disciplines[]', id));
 
-    // Ajouter le logo (fichier)
-    const logoInput = document.getElementById('formLogo');
-    if (logoInput && logoInput.files.length > 0) {
-        formData.append('logo', logoInput.files[0]);
-    }
+            if (formLogo && formLogo.files.length > 0) {
+                formData.append('logo', formLogo.files[0]);
+            }
 
-    // Ajouter les photos (fichiers)
-    const photosInput = document.getElementById('formPhotos');
-    if (photosInput && photosInput.files.length > 0) {
-        for (let i = 0; i < photosInput.files.length; i++) {
-            formData.append('photos[]', photosInput.files[i]);
-        }
-    }
+            if (formPhotos && formPhotos.files.length > 0) {
+                for (let i = 0; i < formPhotos.files.length; i++) {
+                    formData.append('photos[]', formPhotos.files[i]);
+                }
+            }
 
-    // Si c'est une modification, ajouter la méthode PUT
-    if (isEdit) {
-        formData.append('_method', 'PUT');
-    }
+            if (isEdit) {
+                formData.append('_method', 'PUT');
+            }
 
-    try {
-        const url = isEdit
-            ? `/api/admin/centres/${editIdInput.value}`
-            : '/api/admin/centres';
+            try {
+                const url = isEdit
+                    ? `/api/admin/centres/${editIdInput.value}`
+                    : '/api/admin/centres';
 
-        const response = await fetch(url, {
-            method: 'POST', // Laravel gère PUT via _method
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                // Ne pas mettre Content-Type ! Le navigateur le gère avec FormData
-            },
-            body: formData,
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                    },
+                    body: formData,
+                });
+
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.message || 'Erreur lors de l\'enregistrement');
+                }
+
+                const result = await response.json();
+                alert(result.message || 'Centre enregistré avec succès.');
+                closeModal();
+                await loadCentres();
+
+            } catch (error) {
+                console.error(error);
+                alert(error.message || 'Une erreur est survenue.');
+            }
         });
-
-        if (!response.ok) {
-            const error = await response.json();
-            throw new Error(error.message || 'Erreur lors de l\'enregistrement');
-        }
-
-        const result = await response.json();
-        alert(result.message || 'Centre enregistré avec succès.');
-        closeModal();
-        await loadCentres();
-
-    } catch (error) {
-        console.error(error);
-        alert(error.message || 'Une erreur est survenue.');
-    }
-});
 
         // ============================================
         // ACTIONS ADMIN
@@ -1057,7 +1013,7 @@ document.getElementById('showMessagesBtn').addEventListener('click', function() 
 
         document.getElementById('manageDisciplinesBtn').addEventListener('click', () => {
             const disciplineList = disciplinesData.map(d => `- ${d.nom}`).join('\n');
-            const newDiscipline = prompt(`Gestion des disciplines\n\nDisciplines actuelles :\n${disciplineList}\n\nEntrez le nom d'une nouvelle discipline (ou annuler pour quitter) :`);
+            const newDiscipline = prompt(`Gestion des disciplines\n\nDisciplines actuelles :\n${disciplineList}\n\nEntrez le nom d'une nouvelle discipline :`);
 
             if (newDiscipline && newDiscipline.trim()) {
                 createDiscipline(token, { nom: newDiscipline.trim() })
@@ -1068,6 +1024,330 @@ document.getElementById('showMessagesBtn').addEventListener('click', function() 
                     .catch(err => {
                         alert(err.message || 'Erreur lors de la création.');
                     });
+            }
+        });
+
+        // ============================================
+        // CENTRES EN ATTENTE
+        // ============================================
+
+        async function loadEnAttente() {
+            try {
+                const response = await fetch('/api/admin/centres/en-attente', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json',
+                    },
+                });
+
+                if (!response.ok) throw new Error('Erreur de chargement');
+
+                enAttenteData = await response.json();
+                renderEnAttente(enAttenteData);
+                updateEnAttenteBadge(enAttenteData);
+
+            } catch (error) {
+                console.error(error);
+                document.getElementById('enAttenteTableBody').innerHTML = `
+                    <tr>
+                        <td colspan="5" class="text-center py-8 text-red-400">
+                            <i class="fas fa-exclamation-circle mr-2"></i>
+                            Erreur lors du chargement.
+                        </td>
+                    </tr>
+                `;
+            }
+        }
+
+        function renderEnAttente(centres) {
+            const tbody = document.getElementById('enAttenteTableBody');
+
+            if (!centres || centres.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="5" class="text-center py-8 text-[#34D399]">
+                            <i class="fas fa-check-circle mr-2"></i>
+                            Aucun centre en attente.
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tbody.innerHTML = centres.map(centre => `
+                <tr>
+                    <td class="font-medium text-white">${centre.nom}</td>
+                    <td class="text-[#C4B5FD]">${centre.commune || '-'}</td>
+                    <td class="text-[#C4B5FD]">
+                        ${centre.disciplines && centre.disciplines.length > 0
+                            ? centre.disciplines.map(d => d.nom).join(', ')
+                            : '-'}
+                    </td>
+                    <td class="text-[#C4B5FD] text-sm">${new Date(centre.created_at).toLocaleDateString('fr-FR')}</td>
+                    <td class="text-right">
+                        <button class="btn-valider text-[#34D399] hover:text-[#2BB88F] px-2 text-sm font-medium" data-id="${centre.id_centre}">
+                            <i class="fas fa-check mr-1"></i> Valider
+                        </button>
+                        <button class="btn-refuser text-red-400 hover:text-red-500 px-2 text-sm font-medium" data-id="${centre.id_centre}">
+                            <i class="fas fa-times mr-1"></i> Refuser
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+
+            document.querySelectorAll('.btn-valider').forEach(btn => {
+                btn.addEventListener('click', () => handleValider(parseInt(btn.dataset.id)));
+            });
+
+            document.querySelectorAll('.btn-refuser').forEach(btn => {
+                btn.addEventListener('click', () => handleRefuser(parseInt(btn.dataset.id)));
+            });
+        }
+
+        function updateEnAttenteBadge(centres) {
+            const badge = document.getElementById('enAttenteBadge');
+            const count = centres ? centres.length : 0;
+
+            if (count > 0) {
+                badge.textContent = count;
+                badge.classList.remove('hidden');
+            } else {
+                badge.classList.add('hidden');
+            }
+        }
+
+        async function handleValider(id) {
+            if (!confirm('Valider ce centre ? Il sera publié sur la carte.')) return;
+
+            try {
+                const response = await fetch(`/api/admin/centres/${id}/valider`, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json',
+                    },
+                });
+
+                if (!response.ok) throw new Error('Erreur');
+
+                await loadEnAttente();
+                await loadCentres();
+                alert('Centre validé et publié avec succès.');
+
+            } catch (error) {
+                alert('Erreur lors de la validation.');
+            }
+        }
+
+        async function handleRefuser(id) {
+            if (!confirm('Refuser ce centre ?')) return;
+
+            try {
+                const response = await fetch(`/api/admin/centres/${id}/refuser`, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json',
+                    },
+                });
+
+                if (!response.ok) throw new Error('Erreur');
+
+                await loadEnAttente();
+                alert('Centre refusé.');
+
+            } catch (error) {
+                alert('Erreur lors du refus.');
+            }
+        }
+
+        // ============================================
+        // MESSAGES
+        // ============================================
+
+        async function loadMessages() {
+            try {
+                const response = await fetch('/api/admin/contacts', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json',
+                    },
+                });
+
+                if (!response.ok) throw new Error('Erreur de chargement');
+
+                messagesData = await response.json();
+                renderMessages(messagesData);
+                updateUnreadBadge(messagesData);
+
+            } catch (error) {
+                console.error(error);
+                document.getElementById('messagesTableBody').innerHTML = `
+                    <tr>
+                        <td colspan="6" class="text-center py-8 text-red-400">
+                            <i class="fas fa-exclamation-circle mr-2"></i>
+                            Erreur lors du chargement des messages.
+                        </td>
+                    </tr>
+                `;
+            }
+        }
+
+        function renderMessages(messages) {
+            const tbody = document.getElementById('messagesTableBody');
+
+            if (!messages || messages.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="6" class="text-center py-8 text-[#C4B5FD]">
+                            <i class="fas fa-inbox mr-2"></i>
+                            Aucun message reçu.
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tbody.innerHTML = messages.map(msg => `
+                <tr class="${!msg.lu ? 'bg-[#A855F7]/5' : ''}">
+                    <td class="font-medium text-white">${msg.nom || 'Anonyme'}</td>
+                    <td class="text-[#C4B5FD]">${msg.email}</td>
+                    <td class="text-[#C4B5FD] max-w-xs truncate" title="${msg.message}">${msg.message}</td>
+                    <td>
+                        <span class="${msg.lu ? 'badge-publie' : 'badge-brouillon'}">
+                            ${msg.lu ? 'Lu' : 'Non lu'}
+                        </span>
+                    </td>
+                    <td class="text-[#C4B5FD] text-sm">${new Date(msg.created_at).toLocaleDateString('fr-FR')}</td>
+                    <td class="text-right">
+                        <div class="flex items-center justify-end gap-2">
+                            ${!msg.lu ? `
+                                <button class="btn-mark-read text-[#34D399] hover:text-[#2BB88F] transition text-sm"
+                                        data-id="${msg.id}"
+                                        title="Marquer comme lu">
+                                    <i class="fas fa-check-circle"></i>
+                                </button>
+                            ` : ''}
+                            <button class="btn-delete-message text-[#C4B5FD] hover:text-red-400 transition text-sm"
+                                    data-id="${msg.id}"
+                                    title="Supprimer">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+
+            document.querySelectorAll('.btn-mark-read').forEach(btn => {
+                btn.addEventListener('click', () => handleMarkAsRead(parseInt(btn.dataset.id)));
+            });
+
+            document.querySelectorAll('.btn-delete-message').forEach(btn => {
+                btn.addEventListener('click', () => handleDeleteMessage(parseInt(btn.dataset.id)));
+            });
+        }
+
+        function updateUnreadBadge(messages) {
+            const badge = document.getElementById('unreadBadge');
+            const unreadCount = messages.filter(m => !m.lu).length;
+
+            if (unreadCount > 0) {
+                badge.textContent = unreadCount;
+                badge.classList.remove('hidden');
+            } else {
+                badge.classList.add('hidden');
+            }
+        }
+
+        async function handleMarkAsRead(id) {
+            try {
+                const response = await fetch(`/api/admin/contacts/${id}/read`, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json',
+                    },
+                });
+
+                if (!response.ok) throw new Error('Erreur');
+
+                await loadMessages();
+
+            } catch (error) {
+                alert('Erreur lors du marquage.');
+            }
+        }
+
+        async function handleDeleteMessage(id) {
+            if (!confirm('Supprimer définitivement ce message ?')) return;
+
+            try {
+                const response = await fetch(`/api/admin/contacts/${id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json',
+                    },
+                });
+
+                if (!response.ok) throw new Error('Erreur');
+
+                await loadMessages();
+
+            } catch (error) {
+                alert('Erreur lors de la suppression.');
+            }
+        }
+
+        // ============================================
+        // BASCULE CENTRES / EN ATTENTE / MESSAGES
+        // ============================================
+
+        const centresSection = document.getElementById('centresSection');
+        const enAttenteSection = document.getElementById('enAttenteSection');
+        const messagesSection = document.getElementById('messagesSection');
+
+        document.getElementById('showEnAttenteBtn').addEventListener('click', function() {
+            if (enAttenteSection.classList.contains('hidden')) {
+                enAttenteSection.classList.remove('hidden');
+                centresSection.style.display = 'none';
+                messagesSection.classList.add('hidden');
+
+                this.classList.add('btn-primary');
+                this.classList.remove('btn-secondary');
+
+                const msgBtn = document.getElementById('showMessagesBtn');
+                msgBtn.classList.remove('btn-primary');
+                msgBtn.classList.add('btn-secondary');
+
+                loadEnAttente();
+            } else {
+                enAttenteSection.classList.add('hidden');
+                centresSection.style.display = '';
+                this.classList.remove('btn-primary');
+                this.classList.add('btn-secondary');
+            }
+        });
+
+        document.getElementById('showMessagesBtn').addEventListener('click', function() {
+            if (messagesSection.classList.contains('hidden')) {
+                messagesSection.classList.remove('hidden');
+                centresSection.style.display = 'none';
+                enAttenteSection.classList.add('hidden');
+
+                this.classList.add('btn-primary');
+                this.classList.remove('btn-secondary');
+
+                const enBtn = document.getElementById('showEnAttenteBtn');
+                enBtn.classList.remove('btn-primary');
+                enBtn.classList.add('btn-secondary');
+
+                loadMessages();
+            } else {
+                messagesSection.classList.add('hidden');
+                centresSection.style.display = '';
+                this.classList.remove('btn-primary');
+                this.classList.add('btn-secondary');
             }
         });
     </script>
