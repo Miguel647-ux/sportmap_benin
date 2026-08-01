@@ -72,7 +72,7 @@ async function loadFilters() {
     try {
         // Charger les disciplines
         const disciplines = await getDisciplines();
-        disciplineFilter.innerHTML = `<option value="">Toutes les disciplines</option>`;
+        disciplineFilter.innerHTML = `<option value="">Disciplines</option>`;
         disciplines.forEach(discipline => {
             const option = document.createElement('option');
             option.value = discipline.id_discipline;
@@ -82,7 +82,7 @@ async function loadFilters() {
 
         // Charger les communes
         const communes = await getCommunes();
-        communeFilter.innerHTML = `<option value="">Toutes les communes</option>`;
+        communeFilter.innerHTML = `<option value="">Communes</option>`;
         communes.forEach(commune => {
             const option = document.createElement('option');
             option.value = commune;
@@ -135,35 +135,35 @@ function renderCentres(centres) {
     if (!centres || centres.length === 0) {
         resultsContainer.innerHTML = `
             <div class="col-span-full text-center py-10">
-                <p class="text-gray-500">Aucun centre trouvé.</p>
-                <p class="text-gray-400 text-sm mt-1">Essayez de modifier vos critères de recherche.</p>
+                <p class="text-[#C4B5FD]">Aucun centre trouvé.</p>
+                <p class="text-[#A5B4FC] text-sm mt-1">Essayez de modifier vos critères de recherche.</p>
             </div>
         `;
         return;
     }
 
     resultsContainer.innerHTML = centres.map(centre => `
-        <div class="card p-5">
+        <div class="glass-card p-5">
             <div class="flex items-start gap-4">
                 ${centre.logo ? `
-                    <img src="${centre.logo}" alt="${centre.nom}" class="w-14 h-14 rounded-full object-cover flex-shrink-0" />
+                    <img src="${centre.logo}" alt="${centre.nom}" class="w-14 h-14 rounded-full object-cover flex-shrink-0 border border-[#A855F7]/30" />
                 ` : `
-                    <div class="w-14 h-14 rounded-full bg-gray-200 flex items-center justify-center flex-shrink-0">
-                        <i class="fas fa-building text-gray-400 text-xl"></i>
+                    <div class="w-14 h-14 rounded-full bg-[#1F0B3A] flex items-center justify-center flex-shrink-0 border border-[#A855F7]/30">
+                        <i class="fas fa-building text-[#C4B5FD] text-xl"></i>
                     </div>
                 `}
                 <div class="flex-1 min-w-0">
-                    <h3 class="font-bold text-[#0A0A0A] text-lg truncate">${centre.nom}</h3>
-                    <p class="text-gray-500 text-sm">
-                        <i class="fas fa-map-marker-alt text-[#FF6B00] w-4"></i>
+                    <h3 class="font-bold text-white text-lg truncate">${centre.nom}</h3>
+                    <p class="text-[#C4B5FD] text-sm">
+                        <i class="fas fa-map-marker-alt text-[#FACC15] w-4"></i>
                         ${centre.quartier || 'Quartier non spécifié'}, ${centre.commune || 'Commune non spécifiée'}
                     </p>
                     <div class="flex items-center gap-3 mt-1">
-                        <span class="text-sm text-[#FF6B00]">
-                            <i class="fas fa-star text-[#FF6B00]"></i> 4.8
+                        <span class="text-sm text-[#FACC15]">
+                            <i class="fas fa-star text-[#FACC15]"></i> 4.8
                         </span>
-                        <span class="text-sm text-gray-400">•</span>
-                        <span class="text-sm text-gray-500">
+                        <span class="text-sm text-[#A5B4FC]">•</span>
+                        <span class="text-sm text-[#C4B5FD]">
                             ${centre.disciplines && centre.disciplines.length > 0 
                                 ? centre.disciplines.map(d => d.nom).join(', ') 
                                 : 'Aucune discipline'}
@@ -171,13 +171,13 @@ function renderCentres(centres) {
                     </div>
                     ${centre.telephone ? `
                         <div class="mt-2 flex items-center gap-3">
-                            <a href="tel:${centre.telephone}" class="text-gray-500 text-sm hover:text-[#FF6B00] transition">
-                                <i class="fas fa-phone text-[#FF6B00] mr-1"></i> ${centre.telephone}
+                            <a href="tel:${centre.telephone}" class="text-[#C4B5FD] text-sm hover:text-[#FACC15] transition">
+                                <i class="fas fa-phone text-[#FACC15] mr-1"></i> ${centre.telephone}
                             </a>
                         </div>
                     ` : ''}
                     <a href="/centre.html?id=${centre.id_centre}" 
-                       class="btn-outline-orange mt-3 inline-block px-4 py-1.5 rounded-lg text-sm font-medium transition">
+                       class="btn-secondary mt-3 inline-block px-4 py-1.5 rounded-full text-sm font-medium transition">
                         Voir détails
                     </a>
                 </div>

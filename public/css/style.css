@@ -361,3 +361,45 @@ video {
     transform: scale(1.1);
     box-shadow: 0 6px 20px rgba(255, 107, 0, 0.5);
 }
+
+/* ============================================
+   CHAMPS DE FORMULAIRE — GRANDS ET AÉRÉS
+   ============================================ */
+
+.form-input-wide {
+    width: 100%;
+    padding: 18px 24px;
+    font-size: 18px;
+    font-family: 'Inter', sans-serif;
+    background: rgba(15, 10, 31, 0.6);
+    border: 1px solid rgba(168, 85, 247, 0.25);
+    color: #FFFFFF;
+    border-radius: 16px;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+.form-input-wide:focus {
+    outline: none;
+    border-color: #A855F7;
+    box-shadow: 0 0 0 4px rgba(168, 85, 247, 0.15);
+}
+
+.form-input-wide::placeholder {
+    color: #A5B4FC;
+    font-size: 17px;
+}
+
+.form-label-wide {
+    display: block;
+    font-weight: 600;
+    font-size: 16px;
+    color: #C4B5FD;
+    margin-bottom: 10px;
+}
+
+.form-label-wide i {
+    color: #FACC15;
+    margin-right: 10px;
+    width: 20px;
+}
