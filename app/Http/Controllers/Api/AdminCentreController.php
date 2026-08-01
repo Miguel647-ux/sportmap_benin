@@ -126,4 +126,31 @@ class AdminCentreController extends Controller
             'centre' => $centre,
         ]);
     }
+
+    public function enAttente()
+{
+    $centres = Centre::with(['disciplines'])
+        ->where('statut_validation', 'en_attente')
+        ->orderBy('created_at', 'desc')
+        ->get();
+
+    return response()->json($centres);
+}
+
+public function valider(Centre $centre)
+{
+    $centre->update([
+        'statut_validation' => 'valide',
+        'statut' => 'publie',
+    ]);
+
+    return response()->json(['message' => 'Centre validé avec succès']);
+}
+
+public function refuser(Centre $centre)
+{
+    $centre->update(['statut_validation' => 'refuse']);
+
+    return response()->json(['message' => 'Centre refusé']);
+}
 }

@@ -19,7 +19,8 @@ Route::prefix('visiteur')->group(function () {
     Route::get('/centres', [VisiteurCentreController::class, 'index']);
     Route::get('/centres/{centre}', [VisiteurCentreController::class, 'show']);
     Route::get('/disciplines', [VisiteurCentreController::class, 'disciplines']);
-     Route::post('/contact', [ContactController::class, 'store'])->middleware('throttle:5,1');
+    Route::post('/contact', [ContactController::class, 'store'])->middleware('throttle:5,1');
+    Route::post('/centres', [VisiteurCentreController::class, 'store'])->middleware('throttle:5,1');
 });
 
 // ============================================
@@ -41,6 +42,16 @@ Route::prefix('admin')->middleware(['auth:sanctum', 'throttle:60,1'])->group(fun
     Route::get('/contacts', [AdminContactController::class, 'index']);
      Route::put('/contacts/{contact}/read', [AdminContactController::class, 'markAsRead']);
     Route::delete('/contacts/{contact}', [AdminContactController::class, 'destroy']);
+    Route::get('/centres/en-attente', [AdminCentreController::class, 'enAttente']);
+    Route::put('/centres/{centre}/valider', [AdminCentreController::class, 'valider']);
+    Route::put('/centres/{centre}/refuser', [AdminCentreController::class, 'refuser']);
+
+    // Routes API standard (DOIT ÊTRE APRÈS les routes spécifiques)
+    Route::apiResource('centres', AdminCentreController::class);
+    Route::post('/centres/{centre}/publier', [AdminCentreController::class, 'publier']);
+    Route::post('/centres/{centre}/depublier', [AdminCentreController::class, 'depublier']);
+    Route::post('/centres/{centre}/photos', [AdminCentreController::class, 'uploadPhoto']);
+    Route::delete('/photos/{photo}', [AdminCentreController::class, 'deletePhoto']);
     
 
 
@@ -56,5 +67,3 @@ Route::prefix('admin')->middleware(['auth:sanctum', 'throttle:60,1'])->group(fun
 
     Route::get('/stats', [AdminStatsController::class, 'index']);
 });
-
-Route::get('/contacts', [ContactController::class, 'index'])->middleware('auth:sanctum');

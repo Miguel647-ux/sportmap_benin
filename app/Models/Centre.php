@@ -29,6 +29,7 @@ class Centre extends Model
         'statut',
         'date_creation',
         'id_administrateur',
+        'statut_validation'
     ];
 
     protected $casts = [
