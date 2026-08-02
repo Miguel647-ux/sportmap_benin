@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>À propos — SportMap Bénin</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+    <!-- Styles personnalisés -->
+    <link rel="stylesheet" href="/css/style.css" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon.png" />
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0F0A1F;
+            color: #FFFFFF;
+        }
+
+        .glass {
+            background: rgba(15, 10, 31, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(168, 85, 247, 0.15);
+        }
+
+        .glass-card {
+            background: rgba(15, 10, 31, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(168, 85, 247, 0.2);
+            border-radius: 24px;
+            padding: 40px;
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:hover {
+            border-color: rgba(250, 204, 21, 0.3);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #FACC15, #FBBF24);
+            color: #0F0A1F;
+            font-weight: 700;
+            padding: 12px 32px;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            display: inline-block;
+            font-size: 15px;
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 0 30px rgba(250, 204, 21, 0.3);
+            transform: scale(1.02);
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0F0A1F;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #A855F7;
+            border-radius: 8px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #C026D3;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ==================== HEADER AVEC MENU BURGER ==================== -->
+    <header id="mainHeader" class="fixed top-0 left-0 w-full z-50 glass px-4 sm:px-6 py-2 sm:py-3 flex items-center justify-between transition-all duration-300">
+        <a href="/" class="flex items-center gap-3 text-white text-xl font-bold">
+            <img src="/images/logo.png" alt="SportMap Bénin" class="h-10 w-auto" />
+            <span class="hidden sm:inline">SportMap Bénin</span>
+        </a>
+
+        <nav class="hidden md:flex items-center gap-6 text-sm text-[#C4B5FD]">
+            <a href="/" class="hover:text-[#FACC15] transition">Accueil</a>
+            <a href="#results-section" class="hover:text-[#FACC15] transition">Carte</a>
+            <a href="/ajouter-un-centre.html" class="hover:text-[#FACC15] transition">Ajouter</a>
+            <a href="/a-propos.html" class="hover:text-[#FACC15] transition">À propos</a>
+            <a href="/faq.html" class="hover:text-[#FACC15] transition">FAQ</a>
+            <a href="/contact.html" class="hover:text-[#FACC15] transition">Contact</a>
+        </nav>
+
+        <div class="flex items-center gap-4">
+            <a href="/ajouter-un-centre.html" class="hidden md:inline-block btn-primary text-sm px-5 py-2">
+                <i class="fas fa-plus mr-1"></i> Ajouter
+            </a>
+            <button id="menuToggle" class="md:hidden text-white text-2xl">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- ==================== MENU LATÉRAL ==================== -->
+    <div id="sideMenu" class="fixed top-0 right-0 h-full w-72 bg-[#0F0A1F] shadow-2xl z-40 transform translate-x-full transition-transform duration-300 ease-in-out pt-20 px-6 border-l border-[#A855F7]/20">
+        <button id="closeMenu" class="absolute top-5 right-5 text-white text-3xl">&times;</button>
+        <nav class="flex flex-col gap-6 text-white text-lg">
+            <a href="/" class="hover:text-[#FACC15] transition border-b border-white/10 pb-3">Accueil</a>
+            <a href="#results-section" class="hover:text-[#FACC15] transition border-b border-white/10 pb-3">Carte</a>
+            <a href="/ajouter-un-centre.html" class="hover:text-[#FACC15] transition border-b border-white/10 pb-3">Ajouter</a>
+            <a href="/a-propos.html" class="hover:text-[#FACC15] transition border-b border-white/10 pb-3">À propos</a>
+            <a href="/faq.html" class="hover:text-[#FACC15] transition border-b border-white/10 pb-3">FAQ</a>
+            <a href="/contact.html" class="hover:text-[#FACC15] transition border-b border-white/10 pb-3">Contact</a>
+        </nav>
+    </div>
+
+    <!-- ==================== OVERLAY ==================== -->
+    <div id="menuOverlay" class="fixed inset-0 bg-black/50 z-30 hidden"></div>
+
+    <!-- ==================== HERO ==================== -->
+    <section class="min-h-[30vh] flex flex-col justify-center items-center text-center px-4 relative pt-24">
+        <div class="absolute inset-0 bg-[#0F0A1F]/70 z-0"></div>
+        <div class="relative z-10 max-w-4xl mx-auto">
+            <h1 class="text-4xl md:text-5xl font-extrabold text-white">À propos</h1>
+            <p class="text-[#C4B5FD] text-lg mt-4">Découvrez la mission de SportMap Bénin</p>
+        </div>
+    </section>
+
+    <!-- ==================== CONTENU ==================== -->
+    <section class="max-w-4xl mx-auto px-4 py-16">
+        <div class="glass-card">
+            <h2 class="text-2xl font-bold text-white mb-4">Notre mission</h2>
+            <p class="text-[#C4B5FD] leading-relaxed mb-6">
+                SportMap Bénin est une plateforme de géolocalisation dédiée aux centres de formation sportive au Bénin. Notre mission est de permettre à tout sportif, parent ou jeune talent de trouver facilement un centre près de chez lui, avec les bonnes disciplines et les bons contacts.
+            </p>
+            <p class="text-[#C4B5FD] leading-relaxed">
+                Que vous soyez footballeur, basketteur, judoka, nageur ou tennisman, SportMap Bénin vous aide à trouver votre chemin vers l'excellence sportive.
+            </p>
+            <div class="mt-8 border-t border-[#A855F7]/20 pt-6 text-sm text-[#A5B4FC]">
+                SportMap Bénin — L'annuaire de référence des centres sportifs au Bénin.
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="border-t border-[#A855F7]/20 py-8 px-4">
+        <div class="max-w-7xl mx-auto text-center text-sm text-[#C4B5FD]">
+            &copy; 2026 SportMap Bénin — Tous droits réservés.
+        </div>
+    </footer>
+
+    <script src="/js/menu.js"></script>
+</body>
+</html>
